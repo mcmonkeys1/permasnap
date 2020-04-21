@@ -4,6 +4,8 @@ import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 /* redux imports */
 import { useWallet } from '../hooks/useWallet';
+import { DPost } from '../providers/DPostProvider';
+import { JWKInterface } from 'arweave/web/lib/wallet';
 
 const Tab1: React.FC = () => {
   const { arWallet, arAddress } = useWallet()
@@ -24,11 +26,11 @@ const Tab1: React.FC = () => {
         </IonHeader>
         <ExploreContainer name="Tab 1 page" />
         <hr />
-        {/* <IonButton onClick={() => {
-          generateWallet().then((jwk) => dispatch( changeWallet(jwk) ) ) //generate wallet and store in redux
+        <IonButton onClick={() => {
+          DPost(arWallet as JWKInterface)
         }}>
-          Gimme new Wallet
-        </IonButton> */}
+          Test DPost
+        </IonButton>
         Wallet Address: {arAddress} 
         <hr />
         Actual Wallet: { JSON.stringify(arWallet)}

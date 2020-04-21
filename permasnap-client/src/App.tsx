@@ -34,6 +34,11 @@ const App: React.FC = () => {
   useEffect(() => {
     Plugins.SplashScreen.hide()
     console.log(JSON.stringify('address: '+arAddress)) //call useWallet to initialise
+
+    console.log('process.env.NODE_ENV='+process.env.NODE_ENV)
+    console.log('App-Name: '+process.env.REACT_APP_APP_NAME)
+    console.log('App-Version: '+process.env.REACT_APP_APP_VERSION)
+
   },[]) //like c'tor
   return (
     <IonApp>

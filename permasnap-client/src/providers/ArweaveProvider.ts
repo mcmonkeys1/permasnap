@@ -1,9 +1,8 @@
-// import Arweave from 'arweave/web'
 import { JWKInterface } from 'arweave/web/lib/wallet'
+let Arweave
+if(process.env.NODE_ENV === "test"){ Arweave = require('arweave/node') } 
+else{ Arweave = require('arweave/web').default } //hack for testing to work
 
-import Arweave from 'arweave/web'
-// let Arweave 
-// if(process.env.NODE_ENV === 'test'){ Arweave = require('arweave/node') } else{ Arweave = require('arweave/web') } //hack for testing to work
 
 const arweave = Arweave.init({}) //lets use ARCA node when it's up
 
@@ -23,6 +22,9 @@ export const isInstanceofJwkInterface = (obj: object):boolean => {
 			result = false
 		}
 	})
+	// // You could go on: https://tools.ietf.org/html/rfc7518#section-6.3
+	// let typed = obj as JWKInterface
+	// if( typed.kty !== "RSA " || typed.e !== "AQAB" ) return false
 	return result
 }
 
