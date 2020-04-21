@@ -1,4 +1,4 @@
-import { ClientDelegatedTxnDto } from "../../../server/src/types/dto";
+import { ClientDelegatedTxnDto } from "../server-types/dto";
 import axios from 'axios';
 import { JWKInterface } from "arweave/web/lib/wallet";
 import WebcryptoDriver from "arweave/web/lib/crypto/webcrypto-driver"
