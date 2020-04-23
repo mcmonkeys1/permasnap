@@ -1,6 +1,6 @@
 # Permasnap
 
-## Server
+## Server (Server code now has it's own repo [https://github.com/ARCA-Arweave/permasnap-server])
 
 To Start : 
 
