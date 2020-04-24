@@ -2,10 +2,10 @@ import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
-/* redux imports */
 import { useWallet } from '../hooks/useWallet';
 import { DPost } from '../providers/DPostProvider';
 import { JWKInterface } from 'arweave/web/lib/wallet';
+import image from '../assets/test/image-test'
 
 const Tab1: React.FC = () => {
   const { arWallet, arAddress } = useWallet()
@@ -27,7 +27,7 @@ const Tab1: React.FC = () => {
         <ExploreContainer name="Tab 1 page" />
         <hr />
         <IonButton onClick={() => {
-          DPost(arWallet as JWKInterface)
+          DPost(arWallet as JWKInterface, image, []).then( res => console.log(res))
         }}>
           Test DPost
         </IonButton>
