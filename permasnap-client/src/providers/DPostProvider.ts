@@ -52,7 +52,7 @@ export const DPost = async (
 	tx.dpost_signature = await sign(jwk, tx.dpost_hash)
 
 	/* send the tx, and return result as a Promise*/
-	let dPostUrl = 'http://192.168.0.17:3000/d_post/'
+	let dPostUrl = process.env.REACT_APP_DPOST_SERVER as string
 	
 	return new Promise<IDpostResult>((resolve,reject) => {
 		axios.post(dPostUrl, tx)
