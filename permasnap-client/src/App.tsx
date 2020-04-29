@@ -7,6 +7,7 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import { useWallet } from './hooks/useWallet';
+import { useUseCamera } from './hooks/useUseCamera';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -30,6 +31,7 @@ if(process.env.NODE_ENV !== 'test' && isPlatform('android')){
 }
 
 const App: React.FC = () => {
+  const { takePhoto } = useUseCamera()
   const { arAddress } = useWallet()
   useEffect(() => {
     Plugins.SplashScreen.hide()
@@ -55,7 +57,7 @@ const App: React.FC = () => {
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='center' class='ion-padding-bottom ion-margin-bottom'>
-            <IonFabButton color='primary' routerLink='/tab2' routerDirection='none' onClick={() => alert("take a pic")}>
+            <IonFabButton color='primary' routerLink='/tab2' routerDirection='none' onClick={() => takePhoto()}>
               <img src={require('./assets/img/icon-camera-200.png')} alt="camera" />
             </IonFabButton>
           </IonFab>

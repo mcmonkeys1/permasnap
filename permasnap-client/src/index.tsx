@@ -6,6 +6,9 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react'; //delays until data retrieved
 import store, { persistor} from './redux/store'
+/* defineCustomElements is for camera error */
+import { defineCustomElements } from '@ionic/pwa-elements/loader'
+defineCustomElements(window);
 
 ReactDOM.render(
 	<Provider store={store}>
