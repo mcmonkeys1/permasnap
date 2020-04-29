@@ -51,14 +51,3 @@ export const useUseCamera = () => {
 	}
 }
 
-// const mkdirPsnap = (dirName:string) => {
-// 	Filesystem.mkdir({
-// 		path: dirName,
-// 		directory: FilesystemDirectory.Cache,
-// 		recursive: false // like mkdir -p
-// 	})
-// 	.then(res => console.log("Folder '"+dirName+"' created."))
-// 	.catch(err => {
-//     console.error('Error! Unable to make directory: ', err);
-//   })
-// }
