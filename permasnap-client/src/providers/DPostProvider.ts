@@ -53,7 +53,8 @@ export const DPost = async (
 
 	/* send the tx, and return result as a Promise*/
 	let dPostUrl = process.env.REACT_APP_DPOST_SERVER as string
-	
+	console.log('Attempting DPost using URL: '+dPostUrl)
+
 	return new Promise<IDpostResult>((resolve,reject) => {
 		axios.post(dPostUrl, tx)
 		.then(res => {

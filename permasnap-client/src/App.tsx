@@ -7,7 +7,8 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import { useWallet } from './hooks/useWallet';
-import { useUseCamera } from './hooks/useUseCamera';
+import { useTakePhoto } from './hooks/useTakePhoto';
+import { isInstanceofJwkInterface } from './providers/ArweaveProvider';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -31,17 +32,24 @@ if(process.env.NODE_ENV !== 'test' && isPlatform('android')){
 }
 
 const App: React.FC = () => {
-  const { takePhoto } = useUseCamera()
-  const { arAddress } = useWallet()
+  const { takePhoto } = useTakePhoto()
+  const { arWallet, arAddress } = useWallet()
   useEffect(() => {
     Plugins.SplashScreen.hide()
-    console.log(JSON.stringify('address: '+arAddress)) //call useWallet to initialise
 
+    //app constants
     console.log('process.env.NODE_ENV='+process.env.NODE_ENV)
     console.log('App-Name: '+process.env.REACT_APP_APP_NAME)
     console.log('App-Version: '+process.env.REACT_APP_APP_VERSION)
 
+    //call useWallet to initialise
+    if(isInstanceofJwkInterface(arWallet)){
+      console.log("Wallet loaded")
+    } else{
+      console.log("ERROR! Failed to load a wallet")
+    }
   },[]) //like c'tor
+
   return (
     <IonApp>
       <IonReactRouter>

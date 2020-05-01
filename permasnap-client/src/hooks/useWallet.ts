@@ -8,7 +8,7 @@ import { JWKInterface } from 'arweave/web/lib/wallet';
 export const useWallet = () => {
 	const arWallet = useSelector((state: IStoreState) => state.wallet) // redux hook to the store (like mapStateToProps)
 	const dispatch = useDispatch() // redux hook to get dispatch function. this is the alternative to using connect() 
-	const [arAddress, setArAddress] = useState<string>()
+	const [arAddress, setArAddress] = useState<string>('updating')
 	
 	useEffect( () => {
 		const init = async () => {

@@ -24,7 +24,7 @@ export const assertPermasnapAlbum = async () => {
 		media.createAlbum({name})
 			.then(()=>console.log('Created album '+name))
 			.catch(()=>console.log('ERROR! failed to create album '+name))
-		return await getPSnapAlbum() //this returns undefined on Android as folder/album is empty
+		return await getPSnapAlbum() //this returns undefined on Android as folder/album is empty and/or takes some time to appear in media library
 	}
 }
 
