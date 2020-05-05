@@ -4,7 +4,12 @@ if(process.env.NODE_ENV === "test"){ Arweave = require('arweave/node') }
 else{ Arweave = require('arweave/web').default } //hack for testing to work
 
 
-const arweave = Arweave.init({}) //lets use ARCA node when it's up
+const arweave = Arweave.init()
+// ({
+// 	host: 'perma.online',
+// 	port: 443,
+// 	protocol: 'https'
+// }) //lets use ARCA node when it's up
 
 export const generateWallet = async ():Promise<JWKInterface> => {
 	return await arweave.wallets.generate()
