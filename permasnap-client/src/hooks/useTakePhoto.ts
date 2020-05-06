@@ -4,7 +4,7 @@ import { CameraPhoto, CameraResultType, CameraSource, Plugins } from '@capacitor
 import { isPlatform } from '@ionic/react';
 import { savePhoto } from '../providers/FilesystemProvider';
 import { useWallet } from './useWallet';
-import { IPSnapPhoto } from '../types/photo';
+import { IPsnapPhoto } from '../redux/reducers';
 
 
 
@@ -13,7 +13,7 @@ export const useTakePhoto = () => {
 	const { getPhoto } = useCamera();
 	const { arWallet: jwk } = useWallet();
 	
-	const takePhoto = async ():Promise<IPSnapPhoto> => {
+	const takePhoto = async ():Promise<IPsnapPhoto> => {
 		
 		/* Take a photo */
 		

@@ -1,5 +1,6 @@
 import { todosReducer } from './todos';
 import { walletReducer } from './wallet';
+import { currentPhotoReducer } from './currentPhoto';
 import { IStoreState } from './reducerTypes';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
@@ -27,7 +28,8 @@ const walletPersistConfig = {
 
 const rootReducer = combineReducers({
 	wallet: persistReducer(walletPersistConfig, walletReducer),
-	todos: todosReducer
+	todos: todosReducer,
+	currentPhoto: currentPhotoReducer,
 })
 
 export const reducers = persistReducer(rootPersistConfig, rootReducer)
