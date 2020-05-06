@@ -6,6 +6,7 @@ import { savePhoto } from '../providers/FilesystemProvider';
 import { DPost, IDpostResult } from '../providers/DPostProvider';
 import { useWallet } from './useWallet';
 import { JWKInterface } from 'arweave/web/lib/wallet';
+import { IPSnapPhoto } from '../types/photo';
 
 
 
@@ -14,7 +15,7 @@ export const useTakePhoto = () => {
 	const { getPhoto } = useCamera();
 	const { arWallet: jwk } = useWallet();
 	
-	const takePhoto = async () => {
+	const takePhoto = async ():Promise<IPSnapPhoto> => {
 		
 		/* Take a photo */
 		
@@ -26,10 +27,9 @@ export const useTakePhoto = () => {
 				resultType: CameraResultType.Uri,
 				
 			})
-			
-		}catch(err){
-			console.log("Error in takePhoto: " + JSON.stringify(err))
-			return
+		}catch(e){
+			console.log("Cancelled taking photo")
+			return Promise.reject()
 		}
 			
 		/* Save to filesystem in permasnap folder */
@@ -37,12 +37,11 @@ export const useTakePhoto = () => {
 		if(isPlatform('hybrid')){
 			await savePhoto(cameraPhoto.path!) //mobile only
 		}
-
 		
 		/* Send to permaweb? */
 		
-		let dataUri: string
 		//read temp file
+		let dataUri: string
 		if(isPlatform('hybrid')){
 			const tempFile = await Filesystem.readFile({ path: cameraPhoto.path! })
 			
@@ -59,41 +58,48 @@ export const useTakePhoto = () => {
 			} else{
 				dataUri = `data:image/${cameraPhoto.format};base64,${tempFile.data}`
 			}
-
-			console.log(dataUri)
 			
 		}else{
 			dataUri = await base64FromPath(cameraPhoto.webPath!)
 		}
 		
 		
-		
-		const MAX_SIZE = 7*1024*1024
-		let size = (new TextEncoder().encode(dataUri)).length
-		console.log('DataUri image size: '+ size)
-		if(size > MAX_SIZE){
-			console.error("file too big: "+size)
-			alert("file too big:"+size+' bytes\nand I need to fix this popup')
-			return 
-		}
 		console.log('cameraPhoto.exif: '+JSON.stringify(cameraPhoto.exif))
+	
 		
-		try {
-			let res: IDpostResult = await DPost(
-				jwk as JWKInterface,
-				dataUri,
-				[]
-			)
+		// //quick data length check - this can be removed once arweave 2.1 is released
+		// const MAX_SIZE = 7*1024*1024
+		// let size = (new TextEncoder().encode(dataUri)).length
+		// console.log('DataUri image size: '+ size)
+		// if(size > MAX_SIZE){
+		// 	console.error("file too big: "+size)
+		// 	alert("file too big:"+size+' bytes\nand I need to fix this popup')
+		// 	return 
+		// }
 
-			console.log("DPostResult: "+ JSON.stringify(res))
+		
+		// //send using dpost server
+		// try {
+		// 	let res: IDpostResult = await DPost(
+		// 		jwk as JWKInterface,
+		// 		dataUri,
+		// 		[]
+		// 	)
+
+		// 	console.log("DPostResult: "+ JSON.stringify(res))
 			
-		} catch (err) {
-			console.log('Caught in takePhoto: '+ JSON.stringify(err))
-		}
+		// } catch (err) {
+		// 	console.log('Caught in takePhoto: '+ JSON.stringify(err))
+		// }
 
-		
+
+		return { dataUri, exif: cameraPhoto.exif}
+	}
+
+	const uploadPhoto = () => {
 		
 	}
+
 	return {
 		takePhoto
 	}

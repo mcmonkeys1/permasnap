@@ -1,4 +1,4 @@
-import { IClientDelegatedTxnDto } from "../server-types";
+import { IClientDelegatedTxnDto } from "../types/dpost";
 import axios from 'axios';
 import { JWKInterface } from "arweave/web/lib/wallet";
 

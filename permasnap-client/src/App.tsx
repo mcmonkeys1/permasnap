@@ -33,7 +33,7 @@ if(process.env.NODE_ENV !== 'test' && isPlatform('android')){
 
 const App: React.FC = () => {
   const { takePhoto } = useTakePhoto()
-  const { arWallet, arAddress } = useWallet()
+  const { arWallet } = useWallet()
   useEffect(() => {
     Plugins.SplashScreen.hide()
 
@@ -65,7 +65,7 @@ const App: React.FC = () => {
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='center' class='ion-padding-bottom ion-margin-bottom'>
-            <IonFabButton color='primary' routerLink='/tab2' routerDirection='none' onClick={() => takePhoto()}>
+            <IonFabButton color='primary' routerLink='/tab2' routerDirection='none' onClick={() => takePhoto().then((p)=>console.log(p))}>
               <img src={require('./assets/img/icon-camera-200.png')} alt="camera" />
             </IonFabButton>
           </IonFab>
