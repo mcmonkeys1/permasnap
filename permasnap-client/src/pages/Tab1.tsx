@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
-
+import { usePhotoUploader } from '../hooks/usePhotoUploader';
+import PhotoUploader from '../components/PhotoUploader';
 
 const Tab1: React.FC = () => {
+  const { isShowing: isShowingModal, toggle: toggleModal } = usePhotoUploader()
   
   return (
     <IonPage>
@@ -22,9 +24,9 @@ const Tab1: React.FC = () => {
         <ExploreContainer name="Tab 1 page" />
 
 
+        <IonButton onClick={ ()=> toggleModal() }>Show modal</IonButton>
 
-
-
+        <PhotoUploader isShowing={isShowingModal} hide={toggleModal} />
 
       </IonContent>
     </IonPage>

@@ -12,7 +12,7 @@ defineCustomElements(window);
 
 ReactDOM.render(
 	<Provider store={store}>
-		<PersistGate persistor={persistor} loading={(<h1>I hope you do not see this message</h1>)}>
+		<PersistGate persistor={persistor} loading={(<h1>Continue showing splashscreen here</h1>)}>
 			<App />
 		</PersistGate>
 	</Provider>, document.getElementById('root')
