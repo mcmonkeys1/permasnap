@@ -10,6 +10,7 @@ import store, { persistor} from './redux/store'
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 defineCustomElements(window);
 
+
 ReactDOM.render(
 	<Provider store={store}>
 		<PersistGate persistor={persistor} loading={(<h1>Continue showing splashscreen here</h1>)}>

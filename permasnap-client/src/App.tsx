@@ -9,6 +9,8 @@ import Tab3 from './pages/Tab3';
 import { useWallet } from './hooks/useWallet';
 import { useTakePhoto } from './hooks/useTakePhoto';
 import { isInstanceofJwkInterface } from './providers/ArweaveProvider';
+import { usePhotoUploader } from './hooks/usePhotoUploader';
+import PhotoUploader from './components/PhotoUploader'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -26,21 +28,23 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+//app constants (need to be here to be printed in Capacitor)
+console.log('process.env.NODE_ENV='+process.env.NODE_ENV)
+console.log('App-Name: '+process.env.REACT_APP_APP_NAME)
+console.log('App-Version: '+process.env.REACT_APP_APP_VERSION)
+
 /* Hitting backButton on Android exits */
 if(process.env.NODE_ENV !== 'test' && isPlatform('android')){
     Plugins.App.addListener('backButton',() => Plugins.App.exitApp() )
 }
 
 const App: React.FC = () => {
-  const { takePhoto } = useTakePhoto()
   const { arWallet } = useWallet()
+  const { takePhoto } = useTakePhoto()
+  const { isShowing, toggle } = usePhotoUploader()
+  
   useEffect(() => {
     Plugins.SplashScreen.hide()
-
-    //app constants
-    console.log('process.env.NODE_ENV='+process.env.NODE_ENV)
-    console.log('App-Name: '+process.env.REACT_APP_APP_NAME)
-    console.log('App-Version: '+process.env.REACT_APP_APP_VERSION)
 
     //call useWallet to initialise
     if(isInstanceofJwkInterface(arWallet)){
@@ -48,7 +52,14 @@ const App: React.FC = () => {
     } else{
       console.log("ERROR! Failed to load a wallet")
     }
+    return () => console.log("Destructor called!")
   },[]) //like c'tor
+
+  const cameraButton = () => {
+    takePhoto().then(r=>{
+      toggle()
+    })
+  }
 
   return (
     <IonApp>
@@ -65,7 +76,7 @@ const App: React.FC = () => {
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='center' class='ion-padding-bottom ion-margin-bottom'>
-            <IonFabButton color='primary' routerLink='/tab2' routerDirection='none' onClick={() => takePhoto().then((p)=>console.log(p))}>
+            <IonFabButton color='primary' routerLink='/tab2' routerDirection='none' onClick={cameraButton}>
               <img src={require('./assets/img/icon-camera-200.png')} alt="camera" />
             </IonFabButton>
           </IonFab>
@@ -75,6 +86,7 @@ const App: React.FC = () => {
             </IonFabButton>
           </IonFab>
       </IonReactRouter>
+      <PhotoUploader isShowing={isShowing} hide={toggle}  />
     </IonApp>
   )
 }

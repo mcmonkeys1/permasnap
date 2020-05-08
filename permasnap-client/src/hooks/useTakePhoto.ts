@@ -5,6 +5,8 @@ import { isPlatform } from '@ionic/react';
 import { savePhoto } from '../providers/FilesystemProvider';
 import { useWallet } from './useWallet';
 import { IPsnapPhoto } from '../redux/reducers';
+import { useDispatch } from 'react-redux';
+import { setCurrentPhoto } from '../redux/actions';
 
 
 
@@ -12,6 +14,7 @@ export const useTakePhoto = () => {
 	const { Filesystem } = Plugins;
 	const { getPhoto } = useCamera();
 	const { arWallet: jwk } = useWallet();
+	const dispatch = useDispatch()
 	
 	const takePhoto = async ():Promise<IPsnapPhoto> => {
 		
@@ -61,12 +64,15 @@ export const useTakePhoto = () => {
 			dataUri = await base64FromPath(cameraPhoto.webPath!)
 		}
 
+		//combine our resultant data
+		let result: IPsnapPhoto = { 
+			dataUri, 
+			exif: cameraPhoto.exif, 
+		} 
 
-		return { dataUri, exif: cameraPhoto.exif}
-	}
+		dispatch(setCurrentPhoto(result)) // save current photo in the store
 
-	const uploadPhoto = () => {
-		
+		return result //return it also 
 	}
 
 	return {

@@ -7,7 +7,7 @@ let webcrypto = window.crypto.subtle  //this is hard for testing in nodejs env ;
 
 export interface IDpostResult {
 	status: string
-	txid: string
+	id: string
 }
 export const DPost = async (
 		jwk:JWKInterface,

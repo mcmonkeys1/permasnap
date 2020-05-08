@@ -11,7 +11,9 @@ export interface ITodo {
 
 export interface IPsnapPhoto {
 	dataUri: string //full pic data here
-	exif?: JSON
+  exif?: any
+  description?: string
+  tags?: string[]
 } 
 
 // this is the interface for use in useSelector

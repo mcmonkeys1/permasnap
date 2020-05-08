@@ -9,7 +9,7 @@ export enum ActionTypes {
   /* wallet actions */
   CHANGE_WALLET = 'CHANGE_WALLET',
   /* currentPhoto actions */
-  SET_CURRENT_PHOTO = 'SET_CURRENT_PHOTO'
+  SET_CURRENT_PHOTO = 'SET_CURRENT_PHOTO',
   /* other actions... */
 }
 

@@ -39,3 +39,4 @@ export const reducers = persistReducer(rootPersistConfig, rootReducer)
 export * from './reducerTypes'
 export * from './todos'
 export * from './wallet'
+export * from './currentPhoto'
