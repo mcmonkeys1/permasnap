@@ -3,18 +3,19 @@ import { IonContent, IonPage, IonCard, IonCardTitle, IonGrid, IonCardContent, Io
 import './Tab2.css';
 import Header from '../components/Header'
 import imgChevron from '../assets/img/chevron.svg'
+import * as CSS from 'csstype'
 
 const Tab2: React.FC = () => {
   return (
     <IonPage>
 			<Header />
 			<IonContent>
-				<IonGrid style={s.grid} >
-					<IonRow style={s.row}>
-            <img src={require('../assets/img/branding.svg')} alt="Permasnap logo" width='100%'/>
+				<IonGrid style={gridStyle} >
+					<IonRow style={rowStyle}>
+            <img src={require('../assets/img/branding.png')} alt="Permasnap logo" width='100%'/>
           </IonRow>
-					<IonRow style={{ ...s.row}}>
-            <IonCard color='tertiary' style={s.card}>
+					<IonRow style={{ ...rowStyle}}>
+            <IonCard color='tertiary' style={cardStyle}>
               <IonCardHeader>
                 <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
               <IonCardTitle>Card Title</IonCardTitle>
@@ -25,8 +26,8 @@ const Tab2: React.FC = () => {
               </IonCardContent>
             </IonCard>
           </IonRow>
-					<IonRow style={s.row}>
-            <IonCard color='primary' style={s.card} button={true} onClick={()=>alert('click!')}>
+					<IonRow style={rowStyle}>
+            <IonCard color='primary' style={cardStyle} button={true} onClick={()=>alert('click!')}>
               <IonIcon src={imgChevron}  /><IonLabel>View Feed</IonLabel><IonIcon src={imgChevron}  />
               <IonCardTitle>View Feed</IonCardTitle>
             </IonCard>
@@ -39,25 +40,25 @@ const Tab2: React.FC = () => {
 
 export default Tab2;
 
-const s = {
-  grid: {
-    height: '80%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  row: {
-    width: '80%',
-    // border: '1px solid red'
-  },
-  card: {
-    width: '100%',
-    borderRadius: 20,
-    margin: 0,
-    padding: 10,
-    textAlign: 'center'
-  }
+
+const gridStyle: CSS.Properties = {
+  height: '80%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'center'
 }
+const rowStyle: CSS.Properties = {
+  width: '80%',
+  // border: '1px solid red'
+}
+const cardStyle: CSS.Properties = {
+  width: '100%',
+  borderRadius: '20',
+  margin: '0',
+  padding: '10',
+  textAlign: 'center'
+}
+
 
 

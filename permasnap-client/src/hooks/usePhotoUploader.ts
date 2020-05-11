@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { DPost, IDpostResult } from '../providers/DPostProvider';
-import { JWKInterface } from 'arweave/web/lib/wallet';
-import { IPsnapPhoto, IStoreState } from '../redux/reducers';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPhoto } from '../redux/actions';
-		
 
+/**
+ * This just controls the modal. It needs to be used, along with corresponding modal componenet, 
+ * in the parent component. There is some referencing going on under the hood in IonModal.
+ */
 
 export const usePhotoUploader = () => {
 	/* Modal related */

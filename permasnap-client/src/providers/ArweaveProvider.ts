@@ -3,13 +3,12 @@ let Arweave
 if(process.env.NODE_ENV === "test"){ Arweave = require('arweave/node') } 
 else{ Arweave = require('arweave/web').default } //hack for testing to work
 
-
-const arweave = Arweave.init()
-// ({
-// 	host: 'perma.online',
-// 	port: 443,
-// 	protocol: 'https'
-// }) //lets use ARCA node when it's up
+const host = process.env.REACT_APP_ARWEAVE_GW_HOST
+const arweave = Arweave.init({
+	host: host,
+	port: 443,
+	protocol: 'https'
+}) 
 
 export const generateWallet = async ():Promise<JWKInterface> => {
 	return await arweave.wallets.generate()
@@ -31,5 +30,22 @@ export const isInstanceofJwkInterface = (obj: object):boolean => {
 	// let typed = obj as JWKInterface
 	// if( typed.kty !== "RSA " || typed.e !== "AQAB" ) return false
 	return result
+}
+
+export const getAllTxsByWallet = async (jwk: JWKInterface) => {
+	
+	let urls: string[] = []
+
+	let gqlQuery = `{
+		transactions(tags: [{name: "dpost_owner", value: "${jwk.n}"}]){
+			id
+		}
+	}`
+
+	let res = await arweave.api.post('arql', { query: gqlQuery })
+	let txids = res.data.data.transactions
+	urls = txids.map( (t: { id: string; }) => 'https://' + host + '/' + t.id)
+
+	return urls
 }
 
