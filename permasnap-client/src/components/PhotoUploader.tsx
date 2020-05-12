@@ -62,7 +62,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 		).then(res => {
 			console.log("DPostResult: "+ JSON.stringify(res))
 			//TODO: add txid to internal list
-			Toast.show({text: "Photo uploading ("+res.status+"). TxId: "+ res.id})
+			Toast.show({text: "Photo uploading ("+res.status+"). TxId: "+ res.id, position: "center"})
 			hide()
 		}).catch((err: any) => {
 			let sErr: string = 'Error in PhotoUploader: '+ JSON.stringify(err)

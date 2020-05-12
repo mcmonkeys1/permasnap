@@ -4,11 +4,13 @@ import { generateWallet, getAddress, isInstanceofJwkInterface } from '../provide
 import { changeWallet } from '../redux/actions';
 import { IStoreState } from '../redux/reducers';
 import { JWKInterface } from 'arweave/web/lib/wallet';
+import { Plugins } from '@capacitor/core';
 
 export const useWallet = () => {
 	const arWallet = useSelector((state: IStoreState) => state.wallet) // redux hook to the store (like mapStateToProps)
 	const dispatch = useDispatch() // redux hook to get dispatch function. this is the alternative to using connect() 
 	const [arAddress, setArAddress] = useState<string>('loading...')
+	const { Toast } = Plugins
 	
 	useEffect( () => {
 		const init = async () => {
@@ -22,7 +24,7 @@ export const useWallet = () => {
 				dispatch( changeWallet(jwk) ) // store wallet in redux
 				let addr = await getAddress(jwk)
 				setArAddress(addr)
-				alert("PLACEHOLDER. a new wallet has been created for you "+ addr )
+				Toast.show({text: "PLACEHOLDER FOR EXPLAINER: a new wallet has been created for you", position: "top"})
 			}
 		}
 		init()
