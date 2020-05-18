@@ -1,49 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRow, IonGrid, IonList, IonListHeader, IonLabel, IonItem, IonIcon } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRow, IonGrid, IonList, IonListHeader, IonLabel, IonItem, IonIcon, IonText, IonCol, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonFooter } from '@ionic/react';
 import './Tab1.css';
 import Header from '../components/Header';
 import * as CSS from 'csstype'
-import { getAllTxsByWallet } from '../providers/ArweaveProvider';
+import { getAllTxsByWallet, ITxData } from '../providers/ArweaveProvider';
 import { useWallet } from '../hooks/useWallet';
 import { JWKInterface } from 'arweave/web/lib/wallet';
 
 const Tab1: React.FC = () => {
-	const [urls, setUrls] = useState<string[]>([])
+	const [txDatas, setTxDatas] = useState<ITxData[]>([])
 	const { arWallet: jwk } = useWallet()
+	let timerId: NodeJS.Timeout //ref of setInterval
 	
 	const getUploads = async () => {
-    const sArray = await getAllTxsByWallet(jwk as JWKInterface)
-    setUrls(sArray)
+    const _txDatas = await getAllTxsByWallet(jwk as JWKInterface)
+		setTxDatas(_txDatas)
+		console.log('fetched data @'+ (new Date()))
   }
 
 	useEffect(() => {
 		getUploads()
+		timerId = setInterval(getUploads,60000) //check every minute
+		return () =>{
+			clearInterval(timerId)
+		}
 	}, []) //once on componenet load
 
 	return (
 		<IonPage>
 			<Header />
 			<IonContent>
-				<IonGrid style={gridStyle} >
-					<IonRow style={rowStyle}>
+				<IonGrid id="screenGrid" style={screenGridStyle} >
+					<IonRow style={brandingRowStyle}>
 						<img src={require('../assets/img/branding.png')} alt="Permasnap logo" width='100%'/>
 					</IonRow>
-					<IonList lines="none">
-						<IonListHeader>
-							<IonLabel>Links to files uploaded with current wallet</IonLabel>
-						</IonListHeader>
-						{ urls.map(url => (
-							<IonItem href={url} key={url} target="_blank">
-								<img slot="start" color="medium" src={url} width="10%" />
-								<IonLabel>{url}</IonLabel>
-							</IonItem>
-						))}
-					</IonList>	
-				
-
-
-
-				
+					<IonRow>
+							{ (txDatas.length > 0) ? txDatas.map(data => (
+								<IonCol sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" style={thumbStyle} >
+									<IonCard color="primary">
+										<IonGrid style={{display: 'flex'}}>
+											<IonCol>
+												<a href={data.url} key={data.url} target="_blank">
+													<img slot="start" color="medium" src={data.url} width="100%" />
+												</a>
+											</IonCol>
+											<IonCol>
+												<IonText color="secondary">{data.description}</IonText><br /><br />
+												<IonText color="tertiary">{ data.hashtags.length>0 ? '#'+ data.hashtags.join(' #') : ''}</IonText>
+											</IonCol>
+										</IonGrid>
+									</IonCard>
+								</IonCol>
+							)) : <IonLabel>No uploaded files found with current wallet</IonLabel>}
+					</IonRow>	
 				</IonGrid>
 			</IonContent>
 		</IonPage>
@@ -53,21 +62,20 @@ const Tab1: React.FC = () => {
 export default Tab1;
 
 
-const rowStyle: CSS.Properties = {
-  width: '80%',
-  // border: '1px solid red'
-}
-const gridStyle: CSS.Properties = {
-  height: '80%',
+const screenGridStyle: CSS.Properties = {
+	height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-around',
-  alignItems: 'center'
+  justifyContent: 'flex-start',
+	alignItems: 'center',
+	overflow: 'scroll',
+	scrollbarWidth: 'none', //Firefox: invisible scrollbars
+	WebkitOverflowScrolling: 'touch',
 }
-const cardStyle: CSS.Properties = {
-  width: '100%',
-  borderRadius: '20',
-  margin: '0',
-  padding: '10',
-  textAlign: 'center'
+const brandingRowStyle: CSS.Properties = {
+	width: '80%',
+	// border: '1px solid red'
+}
+const thumbStyle: CSS.Properties = {
+	// width: "50%",
 }
