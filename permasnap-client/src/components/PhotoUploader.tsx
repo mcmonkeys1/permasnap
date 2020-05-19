@@ -76,7 +76,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 		>
 			<IonCard style={cardStyle} >
 				<h1>Ready for Permanent Upload?</h1>
-				<img src={currentPhoto.dataUri} width='50%' />
+				<img src={currentPhoto.dataUri} width='50%' alt='' />
 
 				<IonInput value={description} placeholder="Enter caption..." onIonChange={ev => setDescription(ev.detail.value!)}></IonInput>
 

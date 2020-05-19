@@ -1,7 +1,7 @@
 import { todosReducer } from './todos';
 import { walletReducer } from './wallet';
 import { currentPhotoReducer } from './currentPhoto';
-import { IStoreState } from './reducerTypes';
+// import { IStoreState } from './reducerTypes';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage' //defaults to local storage for web
