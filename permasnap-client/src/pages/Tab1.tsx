@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRow, IonGrid, IonList, IonListHeader, IonLabel, IonItem, IonIcon, IonText, IonCol, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonFooter } from '@ionic/react';
+import { IonContent, IonPage, IonRow, IonGrid, IonLabel, IonText, IonCol, IonCard } from '@ionic/react';
 import './Tab1.css';
 import Header from '../components/Header';
 import * as CSS from 'csstype'

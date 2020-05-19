@@ -3,7 +3,6 @@ import { base64FromPath,  } from '@ionic/react-hooks/filesystem';
 import { CameraPhoto, CameraResultType, CameraSource, Plugins } from '@capacitor/core'; 
 import { isPlatform } from '@ionic/react';
 import { savePhoto } from '../providers/FilesystemProvider';
-import { useWallet } from './useWallet';
 import { IPsnapPhoto } from '../redux/reducers';
 import { useDispatch } from 'react-redux';
 import { setCurrentPhoto } from '../redux/actions';
@@ -13,7 +12,6 @@ import { setCurrentPhoto } from '../redux/actions';
 export const useTakePhoto = () => {
 	const { Filesystem } = Plugins;
 	const { getPhoto } = useCamera();
-	const { arWallet: jwk } = useWallet();
 	const dispatch = useDispatch()
 	
 	const takePhoto = async ():Promise<IPsnapPhoto> => {

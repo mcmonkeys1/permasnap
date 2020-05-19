@@ -14,12 +14,20 @@ export interface IPsnapPhoto {
   exif?: any
   description?: string
   tags?: string[]
-} 
+}
+
+export interface ITxItem {
+  id: string
+  status: number
+  path: string
+  completed: boolean
+}
 
 // this is the interface for use in useSelector
 export interface IStoreState {
   todos: ITodo[];
   wallet: JWKInterface | {}; // remove these nulls later
   currentPhoto: IPsnapPhoto //only 1 of these
+  txUploads: ITxItem[]
 }
 

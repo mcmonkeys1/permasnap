@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { IonContent, IonModal, IonButton, IonText, IonInput, IonLabel, IonCheckbox, IonItem, IonTextarea, IonCard } from '@ionic/react'
-import { useSelector, useDispatch } from 'react-redux'
+import { IonModal, IonButton, IonText, IonInput, IonCheckbox, IonItem, IonTextarea, IonCard } from '@ionic/react'
+import { useSelector } from 'react-redux'
 import { IStoreState } from '../redux/reducers'
-import { setCurrentPhoto } from '../redux/actions'
 import * as CSS from 'csstype';
-import { IDpostResult, DPost } from '../providers/DPostProvider'
+import { DPost } from '../providers/DPostProvider'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 import { useWallet } from '../hooks/useWallet'
 import { Plugins } from '@capacitor/core';
@@ -17,7 +16,6 @@ interface IProps {
 const PhotoMetadata = ({isShowing, hide}:IProps) => {
 	const { Toast } = Plugins;
 	const currentPhoto = useSelector((state: IStoreState) => state.currentPhoto) //redux
-	const dispatch = useDispatch() //redux
 	const [description, setDescription] = useState('')
 	const [tags, setTags] = useState<string[]>([])
 	const [checkedExif, setCheckedExif] = useState(true)
