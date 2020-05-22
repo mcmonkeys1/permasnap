@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { IonModal, IonButton, IonText, IonInput, IonCheckbox, IonItem, IonTextarea, IonCard } from '@ionic/react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { IStoreState } from '../redux/reducers'
+import { addTxItem } from '../redux/actions';
 import * as CSS from 'csstype';
 import { DPost } from '../providers/DPostProvider'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 import { useWallet } from '../hooks/useWallet'
 import { Plugins } from '@capacitor/core';
+
 
 
 interface IProps {
@@ -16,6 +18,7 @@ interface IProps {
 const PhotoMetadata = ({isShowing, hide}:IProps) => {
 	const { Toast } = Plugins;
 	const currentPhoto = useSelector((state: IStoreState) => state.currentPhoto) //redux
+	const dispatch = useDispatch()
 	const [description, setDescription] = useState('')
 	const [tags, setTags] = useState<string[]>([])
 	const [checkedExif, setCheckedExif] = useState(true)
@@ -23,13 +26,13 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 	let exifData: any = currentPhoto.exif
 
 	useEffect(() => {
-			// Quick data length check - this can be removed once arweave 2.1 is released ?
+		// Quick data length check - this can be removed once arweave 2.1 is released ?
 		const MAX_SIZE = 10*1024*1024 // 10MB as of arweavejs v1.7
 		let size = (new TextEncoder().encode(currentPhoto.dataUri)).length
 		console.log('DataUri image size: '+ size)
 		if(size > MAX_SIZE){
 			console.error("file too big: "+size)
-			alert("file too big:"+size+' bytes\nthis can be removed once arweave 2.1 is released')
+			alert("Error. File too big: "+size+' bytes\nthis can be removed once arweave 2.1 is released')
 			return 
 		}
 
@@ -40,7 +43,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 	 */
 	const upload = () => {
 		currentPhoto.description = description
-		currentPhoto.tags = tags
+		currentPhoto.hashtags = tags
 		if(!checkedExif){
 			currentPhoto.exif = undefined
 		}
@@ -54,14 +57,24 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 		
 		DPost(
 			jwk as JWKInterface,
-			currentPhoto.dataUri,
-			currentPhoto.tags,
+			currentPhoto.dataUri!,
+			currentPhoto.hashtags,
 			currentPhoto.description,
 		).then(res => {
 			console.log("DPostResult: "+ JSON.stringify(res))
 			//TODO: add txid to internal list
-			Toast.show({text: "Photo uploading ("+res.status+"). TxId: "+ res.id, position: "center"})
+			Toast.show({text: "Photo uploading...", position: "center"})
+
+			dispatch(addTxItem({
+				id: res.id, 
+				status: res.status, 
+				dataUri: currentPhoto.dataUri,
+				completed: false,
+				hashtags: currentPhoto.hashtags,
+				description: currentPhoto.description
+			}))
 			hide()
+			
 		}).catch((err: any) => {
 			let sErr: string = 'Error in PhotoUploader: '+ JSON.stringify(err)
 			console.log(sErr)

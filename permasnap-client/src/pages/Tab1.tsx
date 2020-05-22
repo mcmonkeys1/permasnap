@@ -1,30 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { IonContent, IonPage, IonRow, IonGrid, IonLabel, IonText, IonCol, IonCard } from '@ionic/react';
 import './Tab1.css';
 import Header from '../components/Header';
 import * as CSS from 'csstype'
-import { getAllTxsByWallet, ITxData } from '../providers/ArweaveProvider';
 import { useWallet } from '../hooks/useWallet';
 import { JWKInterface } from 'arweave/web/lib/wallet';
+import { useTxNotifier } from '../hooks/useTxNotifier';
+import PictureCard from '../components/PictureCard';
 
 const Tab1: React.FC = () => {
-	const [txDatas, setTxDatas] = useState<ITxData[]>([])
-	const { arWallet: jwk } = useWallet()
-	let timerId: NodeJS.Timeout //ref of setInterval
-	
-	const getUploads = async () => {
-    const _txDatas = await getAllTxsByWallet(jwk as JWKInterface)
-		setTxDatas(_txDatas)
-		console.log('fetched data @'+ (new Date()))
-  }
-
-	useEffect(() => {
-		getUploads()
-		timerId = setInterval(getUploads,60000) //check every minute
-		return () =>{
-			clearInterval(timerId)
-		}
-	}, []) //once on componenet load
+	const { arWallet } = useWallet()
+	const { txDatas } = useTxNotifier(arWallet as JWKInterface)
 
 	return (
 		<IonPage>
@@ -36,21 +22,7 @@ const Tab1: React.FC = () => {
 					</IonRow>
 					<IonRow>
 							{ (txDatas.length > 0) ? txDatas.map(data => (
-								<IonCol sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" style={thumbStyle} >
-									<IonCard color="primary">
-										<IonGrid style={{display: 'flex'}}>
-											<IonCol>
-												<a href={data.url} key={data.url} target="_blank">
-													<img slot="start" color="medium" src={data.url} width="100%" />
-												</a>
-											</IonCol>
-											<IonCol>
-												<IonText color="secondary">{data.description}</IonText><br /><br />
-												<IonText color="tertiary">{ data.hashtags.length>0 ? '#'+ data.hashtags.join(' #') : ''}</IonText>
-											</IonCol>
-										</IonGrid>
-									</IonCard>
-								</IonCol>
+								<PictureCard data={data} />
 							)) : <IonLabel>No uploaded files found with current wallet</IonLabel>}
 					</IonRow>	
 				</IonGrid>

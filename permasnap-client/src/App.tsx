@@ -46,11 +46,11 @@ const App: React.FC = () => {
   useEffect(() => {
     Plugins.SplashScreen.hide()
 
-    //call useWallet to initialise
+    //initialise
     if(isInstanceofJwkInterface(arWallet)){
       console.log("Wallet loaded")
     } else{
-      console.log("ERROR! Failed to load a wallet")
+      console.log("Wallet not found")
     }
     return () => console.log("Destructor called!")
   },[]) //like c'tor

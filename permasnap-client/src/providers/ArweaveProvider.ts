@@ -1,4 +1,5 @@
 import { JWKInterface } from 'arweave/web/lib/wallet'
+import { IPsnapPhoto } from '../redux/reducers'
 let Arweave
 if(process.env.NODE_ENV === "test"){ Arweave = require('arweave/node') } 
 else{ Arweave = require('arweave/web').default } //hack for node-based testing to work
@@ -32,15 +33,9 @@ export const isInstanceofJwkInterface = (obj: object):boolean => {
 	return result
 }
 
-export interface ITxData {
-	url: string
-	description: string
-	hashtags: string[]
-}
-
-export const getAllTxsByWallet = async (jwk: JWKInterface):Promise<ITxData[]> => {
+export const getAllTxsByWallet = async (jwk: JWKInterface):Promise<IPsnapPhoto[]> => {
 	
-	let txDatas: ITxData[] = []
+	let txDatas: IPsnapPhoto[] = []
 
 	//grab all wallets uploads. take id, description, and hashtags - psnap_content_tag (many), psnap_description
 	let gqlQuery = `{
@@ -58,12 +53,11 @@ export const getAllTxsByWallet = async (jwk: JWKInterface):Promise<ITxData[]> =>
 	//grab the query results
 	let res = await arweave.api.post('arql', { query: gqlQuery })
 
-	console.log(res)
 
 	let txs = res.data.data.transactions
 
 	//loop over each tx object reformatting the data we need
-	txDatas = txs.map( (tx: IQuery):ITxData => {
+	txDatas = txs.map( (tx: IQuery):IPsnapPhoto => {
 		//grab tag data we want
 		let hashtags: string[] = []
 		let description = ''
@@ -76,9 +70,11 @@ export const getAllTxsByWallet = async (jwk: JWKInterface):Promise<ITxData[]> =>
 		})
 		//return a ITxData object
 		return {
+			id: tx.id,
 			url: 'https://' + HOST + '/' + tx.id,
 			description: description,
-			hashtags: hashtags
+			completed: true,
+			hashtags: hashtags,
 		}
 	})
 

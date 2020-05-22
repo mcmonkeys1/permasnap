@@ -66,6 +66,8 @@ export const useTakePhoto = () => {
 		let result: IPsnapPhoto = { 
 			dataUri, 
 			exif: cameraPhoto.exif, 
+			completed: false, 
+			hashtags: [],
 		} 
 
 		dispatch(setCurrentPhoto(result)) // save current photo in the store

@@ -17,7 +17,6 @@ describe('Test App.tsx', () => {
     currentPhoto: {hashtags:[],completed:false},
     txList: []
   }
-
   const mockStore = configureStore()
   let store, wrapper;
 
@@ -28,3 +27,7 @@ describe('Test App.tsx', () => {
     expect(baseElement).toBeDefined();
   });
 })
+
+
+
+
