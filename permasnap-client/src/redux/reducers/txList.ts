@@ -1,12 +1,12 @@
 import { Action, ActionTypes } from '../actions';
-import { ITxItem } from './reducerTypes';
+import { IPsnapPhoto } from './reducerTypes';
 
-export const txListReducer = (state: ITxItem[] = [], action: Action) => {
+export const txListReducer = (state: IPsnapPhoto[] = [], action: Action) => {
   switch (action.type) {
     case ActionTypes.ADD_TXITEM:
       return [...state, action.payload]
     case ActionTypes.DELETE_TXITEM:
-      return state.filter((txItem: ITxItem) => txItem.id !== action.payload);
+      return state.filter((item: IPsnapPhoto) => item.id !== action.payload);
     default:
       return state;
   }

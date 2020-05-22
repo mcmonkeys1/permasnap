@@ -10,24 +10,22 @@ export interface ITodo {
 //export interface IWallet <- single object already defined by JWKInterface
 
 export interface IPsnapPhoto {
-	dataUri: string //full pic data here
+  id?: string //txid
+  url?: string //permaweb url
+  dataUri?: string //full pic data here
+  completed: boolean
+  status?: string //debug
   exif?: any
   description?: string
-  tags?: string[]
+  hashtags: string[]
 }
 
-export interface ITxItem {
-  id: string
-  status: number
-  path: string
-  completed: boolean
-}
 
 // this is the interface for use in useSelector
 export interface IStoreState {
   todos: ITodo[];
   wallet: JWKInterface | {}; // remove these nulls later
   currentPhoto: IPsnapPhoto //only 1 of these
-  txUploads: ITxItem[]
+  txList: IPsnapPhoto[]
 }
 

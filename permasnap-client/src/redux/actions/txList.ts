@@ -1,9 +1,9 @@
 import { ActionTypes } from './actionTypes';
-import { ITxItem } from '../reducers/reducerTypes';
+import { IPsnapPhoto } from '../reducers/reducerTypes';
 
 export interface AddTxItemAction {
   type: ActionTypes.ADD_TXITEM
-  payload: ITxItem
+  payload: IPsnapPhoto
 }
 
 export interface DeleteTxItemAction {
@@ -12,7 +12,7 @@ export interface DeleteTxItemAction {
 }
 
 
-export const addTxItem = (item: ITxItem): AddTxItemAction => {
+export const addTxItem = (item: IPsnapPhoto): AddTxItemAction => {
 	return {
 		type: ActionTypes.ADD_TXITEM,
 		payload: item
