@@ -22,7 +22,7 @@ const Tab1: React.FC = () => {
 					</IonRow>
 					<IonRow>
 							{ (txDatas.length > 0) ? txDatas.map(data => (
-								<PictureCard data={data} />
+								<PictureCard key={data.id} data={data} />
 							)) : <IonLabel>No uploaded files found with current wallet</IonLabel>}
 					</IonRow>	
 				</IonGrid>
