@@ -13,9 +13,9 @@ const PictureCard = ({data}:{data:IPsnapPhoto}) => {
 					</a>
 				</IonCol>
 				<IonCol>
+					{ !data.completed && (<><IonSpinner color='tertiary' name="crescent" />&nbsp;Loading...<br /><br /></>) }
 					<IonText color="secondary">{data.description}</IonText><br /><br />
 					<IonText color="tertiary">{ data.hashtags.length>0 ? '#'+ data.hashtags.join(' #') : ''}</IonText>
-					{ !data.completed && (<IonSpinner color='tertiary' name="crescent" />) }
 				</IonCol>
 			</IonGrid>
 		</IonCard>
