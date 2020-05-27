@@ -1,6 +1,7 @@
 import React from 'react'
 import { IonCol, IonCard, IonGrid, IonText, IonSpinner } from '@ionic/react'
 import { IPsnapPhoto } from '../redux/reducers'
+import Hashtag from './Hashtag'
 
 const PictureCard = ({data}:{data:IPsnapPhoto}) => {
 	return (
@@ -13,9 +14,10 @@ const PictureCard = ({data}:{data:IPsnapPhoto}) => {
 					</a>
 				</IonCol>
 				<IonCol>
-					{ !data.completed && (<><IonSpinner color='tertiary' name="crescent" />&nbsp;Loading...<br /><br /></>) }
+					{ !data.completed && (<><IonSpinner color='tertiary' name="crescent" />&nbsp;Mining...<br /><br /></>) }
 					<IonText color="secondary">{data.description}</IonText><br /><br />
-					<IonText color="tertiary">{ data.hashtags.length>0 ? '#'+ data.hashtags.join(' #') : ''}</IonText>
+					{/* <IonText color="tertiary">{ data.hashtags.length>0 ? '#'+ data.hashtags.join(' #') : ''}</IonText> */}
+					{ data.hashtags.length>0 ? data.hashtags.map(tag=> <Hashtag key={data.id+tag} term={tag} />) : ""}					
 				</IonCol>
 			</IonGrid>
 		</IonCard>
@@ -24,3 +26,6 @@ const PictureCard = ({data}:{data:IPsnapPhoto}) => {
 }
 
 export default PictureCard
+
+
+

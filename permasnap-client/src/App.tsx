@@ -67,7 +67,7 @@ const App: React.FC = () => {
           <IonRouterOutlet >
             <Route path="/tab1" component={Tab1} exact={true} />
             <Route path="/tab2" component={Tab2} exact={true} />
-            <Route path="/tab3" component={Tab3} exact={true} />
+            <Route path="/tab3/:search?" component={Tab3} exact={true} />
             <Route path="/" render={() => <Redirect to="/tab2" />} exact={true} />
           </IonRouterOutlet>
           <IonFab vertical='bottom' horizontal='start' class='ion-padding-bottom ion-margin-bottom ion-padding-start ion-margin-start'>

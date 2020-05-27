@@ -28,9 +28,60 @@ export const isInstanceofJwkInterface = (obj: object):boolean => {
 		}
 	})
 	// // You could go on: https://tools.ietf.org/html/rfc7518#section-6.3
-	// let typed = obj as JWKInterface
-	// if( typed.kty === undefined || typed.kty !== "RSA " || typed.e === undefined || typed.e !== "AQAB" ) return false
+
 	return result
+}
+
+
+export const getAllTxsByHashtag = async (hashtag: string):Promise<IPsnapPhoto[]> => {
+	return getAllTxsByTag("psnap_content_tag", hashtag)	
+}
+
+const getAllTxsByTag = async (name: string, value: string):Promise<IPsnapPhoto[]> => {
+	let txDatas: IPsnapPhoto[] = []
+
+	//grab all wallets uploads. take id, description, and hashtags - psnap_content_tag (many), psnap_description
+	let gqlQuery = `{
+		transactions(tags: [{name: "${name}", value: "${value}"},{name: "App-Name", value: "${process.env.REACT_APP_APP_NAME}"}]){
+			id
+			tags { name, value }
+		}
+	}`
+	//let's just restate that interface in typescript
+	interface IQuery { 
+		id: string; 
+		tags: { name: string, value: string }[]
+	}
+
+	//grab the query results
+	let res = await arweave.api.post('arql', { query: gqlQuery })
+
+
+	let txs = res.data.data.transactions
+
+	//loop over each tx object reformatting the data we need
+	txDatas = txs.map( (tx: IQuery):IPsnapPhoto => {
+		//grab tag data we want
+		let hashtags: string[] = []
+		let description = ''
+		tx.tags.forEach((tag: {name:string, value:string}) => {
+			if(tag.name === "psnap_content_tag"){
+				hashtags.push(tag.value)
+			} else if(tag.name === "psnap_description"){
+				description = tag.value
+			}
+		})
+		//return a ITxData object
+		return {
+			id: tx.id,
+			url: 'https://' + HOST + '/' + tx.id,
+			description: description,
+			completed: true,
+			hashtags: hashtags,
+		}
+	})
+
+	return txDatas
 }
 
 export const getAllTxsByWallet = async (jwk: JWKInterface):Promise<IPsnapPhoto[]> => {
@@ -80,5 +131,6 @@ export const getAllTxsByWallet = async (jwk: JWKInterface):Promise<IPsnapPhoto[]
 
 	return txDatas
 }
+
 
 

@@ -1,31 +1,58 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonPage, IonGrid, IonRow, IonText, IonLabel, IonHeader, IonTitle } from '@ionic/react';
+import * as CSS from 'csstype'
 import './Tab3.css';
+import Header from '../components/Header';
+import PictureCard from '../components/PictureCard';
+import { useSearch } from '../hooks/useSearch';
 
-const Tab3: React.FC = () => {
+
+
+const Tab3: React.FC = ({match}:any) => {
   const [txtInput, setTxtInput] = useState('')
+  var {txData, text: queryString} = useSearch({match})
+
+
+{/* <IonInput value={txtInput} placeholder="Enter text" onIonChange={ev => setTxtInput(ev.detail.value!)}></IonInput> */}
+
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab 3</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 3 dog</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonInput value={txtInput} placeholder="Enter text" onIonChange={ev => setTxtInput(ev.detail.value!)}></IonInput>
-        <IonButton onClick={ () => {
-          
-        }}>Press</IonButton>
-        <ExploreContainer name="Tab 3 page" />
-      </IonContent>
-    </IonPage>
+		<IonPage>
+			<Header />
+			<IonContent>
+				<IonGrid id="screenGrid" style={screenGridStyle} >
+          <IonRow><IonTitle>{queryString}</IonTitle></IonRow>
+					<IonRow style={brandingRowStyle}>
+						<img src={require('../assets/img/branding.png')} alt="Permasnap logo" width='100%'/>
+					</IonRow>
+					<IonRow>
+            { (
+              <>
+
+              </>
+            )}
+							{ (txData.length > 0) ? txData.map(data => (
+								<PictureCard key={data.id} data={data} />
+							)) : <IonLabel>No pictures found.</IonLabel>}
+					</IonRow>	
+				</IonGrid>
+			</IonContent>
+		</IonPage>
   );
 };
 
 export default Tab3;
+
+const screenGridStyle: CSS.Properties = {
+	height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+	alignItems: 'center',
+	overflow: 'scroll',
+	scrollbarWidth: 'none', //Firefox: invisible scrollbars
+	WebkitOverflowScrolling: 'touch',
+}
+const brandingRowStyle: CSS.Properties = {
+	width: '80%',
+	// border: '1px solid red'
+}
