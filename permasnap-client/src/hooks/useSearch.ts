@@ -1,7 +1,7 @@
 import { useParams, useLocation } from 'react-router';
 import { useState, useEffect } from 'react'
 import { IPsnapPhoto } from '../redux/reducers';
-import { getAllTxsByHashtag } from '../providers/ArweaveProvider'
+import { getAllTxsByHashtag, getAllTxsDefault } from '../providers/ArweaveProvider'
 
 export const useSearch = ({match}:any) => {
 	const [txData, setTxData] = useState<IPsnapPhoto[]>([])
@@ -24,6 +24,9 @@ export const useSearch = ({match}:any) => {
 				}
 			}else{ //!search
 				console.log('no search - default query')
+				setText('no search word')
+				let data = await getAllTxsDefault()
+				setTxData(data)
 			}
 						
 		}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllTxsByWallet } from '../providers/ArweaveProvider'
+import { getAllTxsByPubKey } from '../providers/ArweaveProvider'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 import { IStoreState, IPsnapPhoto } from '../redux/reducers'
 import { deleteTxItem } from '../redux/actions'
@@ -17,7 +17,7 @@ export const useTxNotifier = (jwk: JWKInterface) => {
 	let timerId: NodeJS.Timeout //ref of setInterval
 	useEffect(() => {
 		const getMined = async () => {
-			const mined = await getAllTxsByWallet(jwk)
+			const mined = await getAllTxsByPubKey(jwk.n)
 			
 			setMinedTxs(mined)
 			console.log('uploadedTxs: ')
