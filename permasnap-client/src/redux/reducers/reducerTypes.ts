@@ -17,6 +17,7 @@ export interface IPsnapPhoto {
   status?: string //debug
   exif?: any
   description?: string
+  owner?: string
   hashtags: string[]
 }
 
