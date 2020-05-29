@@ -72,6 +72,8 @@ const getAllTxsByTag = async (name: string, value: string):Promise<IPsnapPhoto[]
 		return []
 	}
 
+	//arweave.transactions.getStatus(txs[0])
+
 	//loop over each tx object reformatting the data we need
 	txDatas = txs.map( (tx: IQuery):IPsnapPhoto => {
 		//grab tag data we want
@@ -79,14 +81,17 @@ const getAllTxsByTag = async (name: string, value: string):Promise<IPsnapPhoto[]
 		let description = ''
 		let owner = ''
 		tx.tags.forEach((tag: {name:string, value:string}) => {
+			// console.log(tag.name+':'+tag.value)
 			switch (tag.name) {
 				case "psnap_content_tag":
 					hashtags.push(tag.value)
-					break;
+					break
 				case "psnap_description":
 					description = tag.value
+					break
 				case "dpost_owner":
 					owner = tag.value
+					break
 				default:
 					break;
 			}
