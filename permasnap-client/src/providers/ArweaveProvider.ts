@@ -72,8 +72,12 @@ const getAllTxsByTag = async (name: string, value: string):Promise<IPsnapPhoto[]
 		return []
 	}
 
-	//arweave.transactions.getStatus(txs[0])
-
+	// arweave.transactions.getStatus(txs[0]).then((status:any)=>{
+	// 	console.log('*************************************************************')
+	// 	console.log(status)
+	// 	console.log('*************************************************************')
+	// })
+	
 	//loop over each tx object reformatting the data we need
 	txDatas = txs.map( (tx: IQuery):IPsnapPhoto => {
 		//grab tag data we want

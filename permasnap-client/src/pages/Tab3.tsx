@@ -25,11 +25,6 @@ const Tab3: React.FC = ({match}:any) => {
 						<img src={require('../assets/img/branding.png')} alt="Permasnap logo" width='100%'/>
 					</IonRow>
 					<IonRow>
-            { (
-              <>
-
-              </>
-            )}
 							{ (txData.length > 0) ? txData.map(data => (
 								<PictureCard key={data.id} data={data} />
 							)) : <IonLabel>No pictures found.</IonLabel>}
