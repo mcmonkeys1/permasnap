@@ -17,19 +17,25 @@ const InfoTab: React.FC = () => {
 					<IonRow style={{ ...rowStyle}}>
             <IonCard color='tertiary' style={cardStyle}>
               <IonCardHeader>
-                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-              <IonCardTitle>Card Title</IonCardTitle>
+                <IonCardTitle>Hello ARCA / Arweave Member</IonCardTitle>
               </IonCardHeader>
               <IonCardContent>
-                Keep close to Nature's heart... and break clear away, once in awhile,
-                and climb a mountain or spend a week in the woods. Wash your spirit clean.
+              Welcome to Permasnap.<br /> This is an early release just for you to test. Permasnap is an application for taking and permanently storing photographs on the Arweave blockweave.
               </IonCardContent>
             </IonCard>
           </IonRow>
 					<IonRow style={rowStyle}>
-            <IonCard color='primary' style={cardStyle} button={true} onClick={()=>alert('click!')}>
-              <IonIcon src={imgChevron}  /><IonLabel>View Feed</IonLabel><IonIcon src={imgChevron}  />
-              <IonCardTitle>View Feed</IonCardTitle>
+            <IonCard color='primary' style={cardStyle} button={true} >
+              {/* <IonIcon src={imgChevron}  /><IonLabel>Settings</IonLabel><IonIcon src={imgChevron}  /> */}
+              <IonCardTitle>For Testing Audience</IonCardTitle>
+              <IonCardContent>
+                <p>
+                  After installation a wallet is automatically created for the user and stored in the device's secure key store. The wallet holds no initial balance, and is used for identification at this point in time.
+                </p>
+                <p>
+                  When the user uploads a picture they sign and send it to the Permasnap DPost (Delegated Posting) server. It uses the user's wallet to identify them and cryptographically prove that they sent the photo and associated data, and then actually post it to be mined in the blockweave.
+                </p>
+              </IonCardContent>
             </IonCard>
           </IonRow>
 				</IonGrid>
