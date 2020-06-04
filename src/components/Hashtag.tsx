@@ -5,19 +5,18 @@ import * as CSS from 'csstype';
 
 interface IProps {
 	term: string
+	style: React.CSSProperties
 }
 
-const Hashtag = ({term}:IProps) => {
+const Hashtag = ({term,style}:IProps) => {
 	return (
-		<div>
-			<Link  to={`/searchtab/search?hashtag=${term}`} ><IonText color='tertiary' >{'#'+term}</IonText></Link>
-		</div>
+		<Link  to={`/searchtab/search?hashtag=${term}`} >
+			<span style={style}>
+				{'#'+term}
+			</span>
+		</Link>
 	)
 }
 
 export default Hashtag
 
-// const linkStyle: CSS.Properties = {
-// 	color: 'tertiary',
-// 	textDecoration: 'none !important',
-// }
