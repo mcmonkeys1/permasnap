@@ -10,7 +10,7 @@ interface IProps {
 const Hashtag = ({term}:IProps) => {
 	return (
 		<div>
-			<Link  to={`/tab3/search?hashtag=${term}`} ><IonText color='tertiary' >{'#'+term}</IonText></Link>
+			<Link  to={`/searchtab/search?hashtag=${term}`} ><IonText color='tertiary' >{'#'+term}</IonText></Link>
 		</div>
 	)
 }

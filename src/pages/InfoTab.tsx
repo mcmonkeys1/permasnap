@@ -1,11 +1,11 @@
 import React from 'react';
 import { IonContent, IonPage, IonCard, IonCardTitle, IonGrid, IonCardContent, IonCardHeader, IonRow, IonCardSubtitle, IonIcon, IonLabel } from '@ionic/react';
-import './Tab2.css';
+import './InfoTab.css';
 import Header from '../components/Header'
 import imgChevron from '../assets/img/chevron.svg'
 import * as CSS from 'csstype'
 
-const Tab2: React.FC = () => {
+const InfoTab: React.FC = () => {
   return (
     <IonPage>
 			<Header />
@@ -38,7 +38,7 @@ const Tab2: React.FC = () => {
   );
 };
 
-export default Tab2;
+export default InfoTab;
 
 
 const gridStyle: CSS.Properties = {

@@ -30,7 +30,7 @@ const PictureCard = ({data}:{data:IPsnapPhoto}) => {
 				</IonCol>
 				<IonCol>
 					{ !data.completed && (<><IonSpinner color='tertiary' name="crescent" />&nbsp;Mining...<br /><br /></>) }
-					<Link to={`/tab3/search?pubkey=${data.owner}`} >{arweaveId.name}</Link><br />
+					<Link to={`/searchtab/search?pubkey=${data.owner}`} >{arweaveId.name}</Link><br />
 
 					<IonText color="secondary">{data.description}</IonText><br /><br />
 					

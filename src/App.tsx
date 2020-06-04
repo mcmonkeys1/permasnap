@@ -3,9 +3,9 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonFab, IonFabButton, isPlatform } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Plugins } from "@capacitor/core";
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import UserTab from './pages/UserTab';
+import InfoTab from './pages/InfoTab';
+import SearchTab from './pages/SearchTab';
 import { useWallet } from './hooks/useWallet';
 import { useTakePhoto } from './hooks/useTakePhoto';
 import { isInstanceofJwkInterface } from './providers/ArweaveProvider';
@@ -65,23 +65,23 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
           <IonRouterOutlet >
-            <Route path="/tab1" component={Tab1} exact={true} />
-            <Route path="/tab2" component={Tab2} exact={true} />
-            <Route path="/tab3/:search?" component={Tab3} exact={true} />
-            <Route path="/" render={() => <Redirect to="/tab2" />} exact={true} />
+            <Route path="/usertab" component={UserTab} exact={true} />
+            <Route path="/infotab" component={InfoTab} exact={true} />
+            <Route path="/searchtab/:search?" component={SearchTab} exact={true} />
+            <Route path="/" render={() => <Redirect to="/usertab" />} exact={true} />
           </IonRouterOutlet>
           <IonFab vertical='bottom' horizontal='start' class='ion-padding-bottom ion-margin-bottom ion-padding-start ion-margin-start'>
-            <IonFabButton color="secondary" routerLink='/tab1' routerDirection='none'>
+            <IonFabButton color="secondary" routerLink='/infotab' routerDirection='none'>
               <img src={require('./assets/img/icon-images.svg')} alt="images" />
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='center' class='ion-padding-bottom ion-margin-bottom'>
-            <IonFabButton color='primary' routerLink='/tab2' routerDirection='none' onClick={cameraButton}>
+            <IonFabButton color='primary' routerLink='/usertab' routerDirection='none' onClick={cameraButton}>
               <img src={require('./assets/img/icon-camera-200.png')} alt="camera" />
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='end' class='ion-padding-bottom ion-margin-bottom ion-padding-end ion-margin-end'>
-            <IonFabButton color='tertiary' routerLink='/tab3' routerDirection='none'>
+            <IonFabButton color='tertiary' routerLink='/searchtab' routerDirection='none'>
               <img src={require('./assets/img/icon-eye.svg')} alt="gallery" />
             </IonFabButton>
           </IonFab>

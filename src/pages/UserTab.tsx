@@ -1,41 +1,38 @@
-import React, { useState } from 'react';
-import { IonContent, IonPage, IonGrid, IonRow, IonText, IonLabel, IonHeader, IonTitle } from '@ionic/react';
-import * as CSS from 'csstype'
-import './Tab3.css';
+import React from 'react';
+import { IonContent, IonPage, IonRow, IonGrid, IonLabel, IonText, IonCol, IonCard } from '@ionic/react';
+import './UserTab.css';
 import Header from '../components/Header';
+import * as CSS from 'csstype'
+import { useWallet } from '../hooks/useWallet';
+import { JWKInterface } from 'arweave/web/lib/wallet';
+import { useTxNotifier } from '../hooks/useTxNotifier';
 import PictureCard from '../components/PictureCard';
-import { useSearch } from '../hooks/useSearch';
 
+const UserTab: React.FC = () => {
+	const { arWallet } = useWallet()
+	const { txDatas } = useTxNotifier(arWallet as JWKInterface)
 
-
-const Tab3: React.FC = ({match}:any) => {
-  const [txtInput, setTxtInput] = useState('')
-  var {txData, text: queryString} = useSearch({match})
-
-
-{/* <IonInput value={txtInput} placeholder="Enter text" onIonChange={ev => setTxtInput(ev.detail.value!)}></IonInput> */}
-
-  return (
+	return (
 		<IonPage>
 			<Header />
 			<IonContent>
 				<IonGrid id="screenGrid" style={screenGridStyle} >
-          <IonRow><IonTitle>{queryString}</IonTitle></IonRow>
 					<IonRow style={brandingRowStyle}>
 						<img src={require('../assets/img/branding.png')} alt="Permasnap logo" width='100%'/>
 					</IonRow>
 					<IonRow>
-							{ (txData.length > 0) ? txData.map(data => (
+							{ (txDatas.length > 0) ? txDatas.map(data => (
 								<PictureCard key={data.id} data={data} />
-							)) : <IonLabel>No pictures found.</IonLabel>}
+							)) : <IonLabel>No uploaded files found with current wallet</IonLabel>}
 					</IonRow>	
 				</IonGrid>
 			</IonContent>
 		</IonPage>
-  );
+	);
 };
 
-export default Tab3;
+export default UserTab;
+
 
 const screenGridStyle: CSS.Properties = {
 	height: '100%',
@@ -50,4 +47,7 @@ const screenGridStyle: CSS.Properties = {
 const brandingRowStyle: CSS.Properties = {
 	width: '80%',
 	// border: '1px solid red'
+}
+const thumbStyle: CSS.Properties = {
+	// width: "50%",
 }
