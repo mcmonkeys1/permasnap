@@ -23,7 +23,7 @@ const UserTab: React.FC = () => {
 					<IonRow>
 							{ (txDatas.length > 0) ? txDatas.map(data => (
 								<PictureCard key={data.id} data={data} />
-							)) : <IonLabel>No uploaded files found with current wallet</IonLabel>}
+							)) : <IonLabel>Get started by taking some pictures!</IonLabel>}
 					</IonRow>	
 				</IonGrid>
 			</IonContent>

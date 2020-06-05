@@ -60,7 +60,6 @@ const spinnerStyle: CSS.Properties = {
   position: 'absolute',
   top: '20px',
   right: '20px',
-  // backgroundColor: 'rgba(128, 128, 128, 0.3)',
   color: 'medium',
 }
 const nameStyle: CSS.Properties = {
@@ -89,16 +88,12 @@ const hashtagsStyle: CSS.Properties = {
 	backgroundColor: 'rgba(128, 128, 128, 0.5)',
 	color: 'white',
 	borderRadius: '10px', 
-
 }
 const captionStyle: CSS.Properties = {
 	position: 'absolute',
 	bottom: '0px',
 	padding: '10px',
 	width: '100%',	
-	minWidth: '100%',
-	// bottom: '0px',
-	// left: '0px',
 	marginBottom: '0px',
 	backgroundColor: 'rgba(128, 128, 128, 0.5)',
 	color: 'white',

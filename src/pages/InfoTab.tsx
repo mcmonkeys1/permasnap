@@ -20,7 +20,7 @@ const InfoTab: React.FC = () => {
                 <IonCardTitle>Hello ARCA / Arweave Member</IonCardTitle>
               </IonCardHeader>
               <IonCardContent>
-              Welcome to Permasnap.<br /> This is an early release just for you to test. Permasnap is an application for taking and permanently storing photographs on the Arweave blockweave.
+              Welcome to Permasnap.<br /> This is an early release just for you to test. Permasnap is an application for taking and permanently storing photographs on the Arweave permaweb.
               </IonCardContent>
             </IonCard>
           </IonRow>

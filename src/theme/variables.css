@@ -20,6 +20,10 @@ http://ionicframework.com/docs/theming/ */
   src: url('../assets/fonts/Oxygen-Light.ttf');
 }
 
+a {
+  text-decoration: none !important;
+}
+
 /** Ionic CSS Variables **/
 :root {
   --ion-font-family: "Oxygen";
