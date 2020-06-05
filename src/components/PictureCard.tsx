@@ -24,12 +24,12 @@ const PictureCard = ({data}:{data:IPsnapPhoto}) => {
 		<IonCol sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" >
 		<IonCard style={cardStyle} >
 			<a href={data.url} key={data.url} target="_blank">
-				<img slot="start" src={data.url ? data.url : data.dataUri} width="100%" />
+				<img slot="start" src={data.url ? data.url : data.dataUri} style={{marginBottom: '-5px'}} />
 			</a>
 			{ !data.completed && (<><IonSpinner  name="crescent" style={spinnerStyle} /></>) }
 			{ arweaveId && (<>
 				<Link to={`/searchtab/search?pubkey=${data.owner}`}>
-					<div  style={nameStyle} >{arweaveId.name}</div>
+					<span  style={nameStyle} >{arweaveId.name}</span>
 				</Link>
 			</>)}
 
@@ -39,7 +39,9 @@ const PictureCard = ({data}:{data:IPsnapPhoto}) => {
 					<Hashtag key={data.id+tag} term={tag} style={hashtagsStyle} />
 				)}					
 				<br />
-				<IonText style={captionStyle} >{data.description}</IonText><br /><br />
+				{ data.description && (<>
+					<IonText style={captionStyle} >{data.description}</IonText><br /><br />
+				</>)}
 				
 			</div>
 
@@ -80,14 +82,20 @@ const containerStyle: CSS.Properties = {
 	margin: '0px',
 }
 const hashtagsStyle: CSS.Properties = {
+	position: 'relative',
+	top: '-15px',
 	padding: '10px',
-	backgroundColor: 'rgba(255, 128, 128, 0.5)',
+	margin: '2px',
+	backgroundColor: 'rgba(128, 128, 128, 0.5)',
 	color: 'white',
 	borderRadius: '10px', 
+
 }
 const captionStyle: CSS.Properties = {
-	// position: 'relative',
-	padding: '10px',	
+	position: 'absolute',
+	bottom: '0px',
+	padding: '10px',
+	width: '100%',	
 	minWidth: '100%',
 	// bottom: '0px',
 	// left: '0px',
