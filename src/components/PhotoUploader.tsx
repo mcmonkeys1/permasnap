@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { IonModal, IonButton, IonText, IonInput, IonCheckbox, IonItem, IonTextarea, IonCard } from '@ionic/react'
+import { IonModal, IonButton, IonText, IonInput, IonCheckbox, IonItem, IonTextarea, IonCard, IonIcon } from '@ionic/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { IStoreState } from '../redux/reducers'
 import { addTxItem } from '../redux/actions';
@@ -8,6 +8,7 @@ import { DPost } from '../providers/DPostProvider'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 import { useWallet } from '../hooks/useWallet'
 import { Plugins } from '@capacitor/core';
+import { send } from 'ionicons/icons'
 
 
 
@@ -44,14 +45,6 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 	const upload = () => {
 		currentPhoto.description = description
 		currentPhoto.hashtags = tags
-		if(!checkedExif){
-			currentPhoto.exif = undefined
-		}
-
-		/** We're not actually doing anythihg with the exif data until a later version, as it's undefined in dpost server.
-		 * We could try and calculate longitude & latitude if GPS data given, but this is non-standard exif format, and 
-		 * might be easier to do with geo-location API.
-		 */
 
 		//send using dpost server
 		
@@ -61,9 +54,8 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 			currentPhoto.hashtags,
 			currentPhoto.description,
 		).then(res => {
-			console.log("DPostResult: "+ JSON.stringify(res))
-			//TODO: add txid to internal list
-			Toast.show({text: "Photo uploading...", position: "center"})
+			console.log('DPostResult: ' + JSON.stringify(res))
+			Toast.show({text: 'Photo uploading...', position: 'center'})
 
 			dispatch(addTxItem({
 				id: res.id, 
@@ -78,7 +70,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 		}).catch((err: any) => {
 			let sErr: string = 'Error in PhotoUploader: '+ JSON.stringify(err)
 			console.log(sErr)
-			Toast.show({text: sErr})
+			Toast.show({text: 'NETWORK ERROR! Please try again', position: 'center'})
 		})
 	}
 
@@ -87,26 +79,23 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 			isOpen={isShowing}
 			onDidDismiss={ ()=> {if(isShowing){hide()}} }
 		>
-			<IonCard style={cardStyle} >
-				<h1>Ready for Permanent Upload?</h1>
-				<img src={currentPhoto.dataUri} width='50%' alt='' />
+			<IonCard 
+					style={{...cardStyle, backgroundImage: `url('${currentPhoto.dataUri}')`}} 
+				>
 
-				<IonInput value={description} placeholder="Enter caption..." onIonChange={ev => setDescription(ev.detail.value!)}></IonInput>
+				<div style={containerStyle}>
 
-				<IonInput value={tags.join(' ')} placeholder="Enter space for multiple tags..." onIonChange={ev => setTags( (ev.detail.value!).split(' ') )}></IonInput>
-				<IonText color="secondary">{'#'+ tags.join(' #')}</IonText>
-				<br />
-				<IonButton onClick={ upload } >Upload Permanently</IonButton>
-
-				<IonItem >
-					<IonCheckbox checked={checkedExif && exifData} disabled={!exifData} onIonChange={e => setCheckedExif(e.detail.checked)} />
-					<IonText>&nbsp;Use EXIF data</IonText>
-				</IonItem>
-				<IonTextarea color={checkedExif?"tertiary":"grey"} disabled={true}  style={exifDataStyle}>
-					{ !exifData ? "no EXIF data" : Object.keys(exifData ).map(key =>
-						<li><span style={{float:"left"}}>{key}</span><span style={{float:"right"}}>{exifData[key]}</span></li>
-					)}
-				</IonTextarea>
+					<div style={hashtagsStyle}>
+						<IonInput value={tags.join(' ')} placeholder="Enter space for multiple tags..." onIonChange={ev => setTags( (ev.detail.value!).split(' ') )} />
+						<IonText color="medium">{'#'+ tags.join(' #')}</IonText>
+					</div>
+					<br />
+					
+					<div style={captionStyle}>
+						<IonInput style={captionInputStyle} value={description} placeholder="Enter caption..." onIonChange={ev => setDescription(ev.detail.value!)} />
+						<IonButton color="none" onClick={ upload } style={{float: 'right'}} ><IonIcon slot="icon-only" icon={send} /></IonButton>
+					</div>
+				</div>
 
 			</IonCard>
 		</IonModal>
@@ -114,11 +103,47 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 }
 export default PhotoMetadata
 
+
+
 const cardStyle: CSS.Properties = {
-	textAlign: "center",
-	overflow: "scroll",
+	margin: '0px',
+	padding: '0px',
+	width: '100%',
+	height: '100%',
+	overflow: 'hidden',
+	backgroundPosition: 'center center',
+	backgroundRepeat: 'no-repeat',
+	backgroundSize: 'cover',
 }
 
-const exifDataStyle: CSS.Properties = {
-	textAlign: 'left',
+const containerStyle: CSS.Properties = {
+	position: 'absolute',
+	width: '100%',
+	bottom: '0px',
+	left: '0px',
+	padding: '0px',
+	margin: '0px',
+}
+const hashtagsStyle: CSS.Properties = {
+	position: 'relative',
+	top: '-50px',
+	padding: '10px',
+	margin: '5px',
+	backgroundColor: 'rgba(128, 128, 128, 0.5)',
+	color: 'white',
+	borderRadius: '10px', 
+}
+const captionStyle: CSS.Properties = {
+	position: 'absolute',
+	display: 'flex',
+	flexDirection: 'row',
+	bottom: '0px',
+	padding: '10px',
+	width: '100%',	
+	marginBottom: '0px',
+	backgroundColor: 'rgba(128, 128, 128, 0.5)',
+	color: 'white',
+}
+const captionInputStyle: CSS.Properties = {
+	borderBottom: '1px solid white',
 }
