@@ -34,7 +34,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 		if(size > MAX_SIZE){
 			console.error("file too big: "+size)
 			alert("Error. File too big: "+size+' bytes\nthis can be removed once arweave 2.1 is released')
-			return 
+			return
 		}
 
 	}, [currentPhoto])
@@ -47,7 +47,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 		currentPhoto.hashtags = tags
 
 		//send using dpost server
-		
+
 		DPost(
 			jwk as JWKInterface,
 			currentPhoto.dataUri!,
@@ -58,15 +58,15 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 			Toast.show({text: 'Photo uploading...', position: 'center'})
 
 			dispatch(addTxItem({
-				id: res.id, 
-				status: res.status, 
+				id: res.id,
+				status: res.status,
 				dataUri: currentPhoto.dataUri,
 				completed: false,
 				hashtags: currentPhoto.hashtags,
 				description: currentPhoto.description
 			}))
 			hide()
-			
+
 		}).catch((err: any) => {
 			let sErr: string = 'Error in PhotoUploader: '+ JSON.stringify(err)
 			console.log(sErr)
@@ -79,18 +79,18 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 			isOpen={isShowing}
 			onDidDismiss={ ()=> {if(isShowing){hide()}} }
 		>
-			<IonCard 
-					style={{...cardStyle, backgroundImage: `url('${currentPhoto.dataUri}')`}} 
+			<IonCard
+					style={{...cardStyle, backgroundImage: `url('${currentPhoto.dataUri}')`}}
 				>
 
 				<div style={containerStyle}>
 
 					<div style={hashtagsStyle}>
 						<IonInput value={tags.join(' ')} placeholder="Enter space for multiple tags..." onIonChange={ev => setTags( (ev.detail.value!).split(' ') )} />
-						<IonText color="medium">{'#'+ tags.join(' #')}</IonText>
+						<IonText color="dark">{'#'+ tags.join(' #')}</IonText>
 					</div>
 					<br />
-					
+
 					<div style={captionStyle}>
 						<IonInput style={captionInputStyle} value={description} placeholder="Enter caption..." onIonChange={ev => setDescription(ev.detail.value!)} />
 						<IonButton color="none" onClick={ upload } style={{float: 'right'}} ><IonIcon slot="icon-only" icon={send} /></IonButton>
@@ -131,7 +131,7 @@ const hashtagsStyle: CSS.Properties = {
 	margin: '5px',
 	backgroundColor: 'rgba(128, 128, 128, 0.5)',
 	color: 'white',
-	borderRadius: '10px', 
+	borderRadius: '10px',
 }
 const captionStyle: CSS.Properties = {
 	position: 'absolute',
@@ -139,11 +139,11 @@ const captionStyle: CSS.Properties = {
 	flexDirection: 'row',
 	bottom: '0px',
 	padding: '10px',
-	width: '100%',	
+	width: '100%',
 	marginBottom: '0px',
 	backgroundColor: 'rgba(128, 128, 128, 0.5)',
 	color: 'white',
 }
 const captionInputStyle: CSS.Properties = {
-	borderBottom: '1px solid white',
+	// borderBottom: '1px solid white',
 }
