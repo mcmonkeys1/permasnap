@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { IonModal, IonButton, IonText, IonInput, IonCheckbox, IonItem, IonTextarea, IonCard, IonIcon } from '@ionic/react'
+import { IonModal, IonButton, IonText, IonInput, IonCard, IonIcon } from '@ionic/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { IStoreState } from '../redux/reducers'
 import { addTxItem } from '../redux/actions';
@@ -22,9 +22,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 	const dispatch = useDispatch()
 	const [description, setDescription] = useState('')
 	const [tags, setTags] = useState<string[]>([])
-	const [checkedExif, setCheckedExif] = useState(true)
 	const { arWallet: jwk }  = useWallet()
-	let exifData: any = currentPhoto.exif
 
 	useEffect(() => {
 		// Quick data length check - this can be removed once arweave 2.1 is released ?

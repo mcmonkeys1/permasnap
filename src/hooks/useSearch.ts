@@ -1,7 +1,7 @@
 import { useParams, useLocation } from 'react-router';
 import { useState, useEffect } from 'react'
 import { IPsnapPhoto } from '../redux/reducers';
-import { getAllTxsByHashtag, getAllTxsDefault, getAllTxsByPubKey } from '../providers/ArweaveProvider'
+import { getAllTxsByHashtag, getAllTxsDefault, getAllTxsByPubKey, getArweaveId } from '../providers/ArweaveProvider'
 
 export const useSearch = ({match}:any) => {
 	const [txData, setTxData] = useState<IPsnapPhoto[]>([])
@@ -22,6 +22,8 @@ export const useSearch = ({match}:any) => {
 				let pubkey = query.get('pubkey')
 				if(pubkey){
 					console.log('pubkey query:- ' + pubkey)
+					let arIdData = await getArweaveId(pubkey)
+					setText(arIdData.name)
 					let data = await getAllTxsByPubKey(pubkey)
 					setTxData(data)
 				}
@@ -31,7 +33,7 @@ export const useSearch = ({match}:any) => {
 				let data = await getAllTxsDefault()
 				setTxData(data)
 			}
-						
+
 		}
 		getter()
 	}, [match]) //query is causing infinite loop

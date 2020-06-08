@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
-import { IonContent, IonPage, IonGrid, IonRow, IonText, IonLabel, IonHeader, IonTitle } from '@ionic/react';
+import React from 'react';
+import { IonContent, IonPage, IonGrid, IonRow, IonLabel, IonTitle } from '@ionic/react';
 import * as CSS from 'csstype'
 import './SearchTab.css';
-import Header from '../components/Header';
 import PictureCard from '../components/PictureCard';
 import { useSearch } from '../hooks/useSearch';
 
 
 
 const SearchTab: React.FC = ({match}:any) => {
-  const [txtInput, setTxtInput] = useState('')
-  var {txData, text: queryString} = useSearch({match})
+	var {txData, text: queryString} = useSearch({match})
 
 
+  // const [txtInput, setTxtInput] = useState('')
 {/* <IonInput value={txtInput} placeholder="Enter text" onIonChange={ev => setTxtInput(ev.detail.value!)}></IonInput> */}
 
   return (
 		<IonPage>
-			<Header />
 			<IonContent>
 				<IonGrid id="screenGrid" style={screenGridStyle} >
           <IonRow><IonTitle>{queryString}</IonTitle></IonRow>
@@ -28,7 +26,7 @@ const SearchTab: React.FC = ({match}:any) => {
 							{ (txData.length > 0) ? txData.map(data => (
 								<PictureCard key={data.id} data={data} />
 							)) : <IonLabel>No pictures found.</IonLabel>}
-					</IonRow>	
+					</IonRow>
 				</IonGrid>
 			</IonContent>
 		</IonPage>

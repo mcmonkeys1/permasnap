@@ -5,13 +5,13 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react'; //delays until data retrieved
 import store, { persistor} from './redux/store'
-import { assertPermasnapAlbum } from './providers/FilesystemProvider';
+// import { assertPermasnapAlbum } from './providers/FilesystemProvider';
 import { defineCustomElements } from '@ionic/pwa-elements/loader'
 
 /* defineCustomElements is for camera error */
 defineCustomElements(window);
-/* prompt for permissions on app first start */
-assertPermasnapAlbum()
+// /* prompt for permissions on app first start */
+// assertPermasnapAlbum()
 
 
 ReactDOM.render(
@@ -20,7 +20,7 @@ ReactDOM.render(
 			<App />
 		</PersistGate>
 	</Provider>, document.getElementById('root')
-		
+
 );
 
 // If you want your app to work offline and load faster, you can change

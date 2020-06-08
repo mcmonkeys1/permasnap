@@ -1,7 +1,6 @@
 import React from 'react';
-import { IonContent, IonPage, IonRow, IonGrid, IonLabel, IonText, IonCol, IonCard } from '@ionic/react';
+import { IonContent, IonPage, IonRow, IonGrid, IonLabel } from '@ionic/react';
 import './UserTab.css';
-import Header from '../components/Header';
 import * as CSS from 'csstype'
 import { useWallet } from '../hooks/useWallet';
 import { JWKInterface } from 'arweave/web/lib/wallet';
@@ -14,7 +13,6 @@ const UserTab: React.FC = () => {
 
 	return (
 		<IonPage>
-			<Header />
 			<IonContent>
 				<IonGrid id="screenGrid" style={screenGridStyle} >
 					<IonRow style={brandingRowStyle}>
@@ -24,7 +22,7 @@ const UserTab: React.FC = () => {
 							{ (txDatas.length > 0) ? txDatas.map(data => (
 								<PictureCard key={data.id} data={data} />
 							)) : <IonLabel>Get started by taking some pictures!</IonLabel>}
-					</IonRow>	
+					</IonRow>
 				</IonGrid>
 			</IonContent>
 		</IonPage>
@@ -47,7 +45,4 @@ const screenGridStyle: CSS.Properties = {
 const brandingRowStyle: CSS.Properties = {
 	width: '80%',
 	// border: '1px solid red'
-}
-const thumbStyle: CSS.Properties = {
-	// width: "50%",
 }

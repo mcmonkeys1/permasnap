@@ -8,7 +8,7 @@ import com.getcapacitor.Plugin;
 import java.util.ArrayList;
 
 import com.whitestein.securestorage.SecureStoragePlugin;
-import io.stewan.capacitor.media.MediaPlugin;
+// import io.stewan.capacitor.media.MediaPlugin;
 
 public class MainActivity extends BridgeActivity {
   @Override
@@ -20,7 +20,7 @@ public class MainActivity extends BridgeActivity {
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
       add(SecureStoragePlugin.class);
-      add(MediaPlugin.class);
+      // add(MediaPlugin.class);
     }});
   }
 }

@@ -1,14 +1,11 @@
 import React from 'react';
-import { IonContent, IonPage, IonCard, IonCardTitle, IonGrid, IonCardContent, IonCardHeader, IonRow, IonCardSubtitle, IonIcon, IonLabel } from '@ionic/react';
+import { IonContent, IonPage, IonCard, IonCardTitle, IonGrid, IonCardContent, IonCardHeader, IonRow } from '@ionic/react';
 import './InfoTab.css';
-import Header from '../components/Header'
-import imgChevron from '../assets/img/chevron.svg'
 import * as CSS from 'csstype'
 
 const InfoTab: React.FC = () => {
   return (
     <IonPage>
-			<Header />
 			<IonContent>
 				<IonGrid style={gridStyle} >
 					<IonRow style={rowStyle}>
@@ -20,7 +17,13 @@ const InfoTab: React.FC = () => {
                 <IonCardTitle>Hello ARCA / Arweave Member</IonCardTitle>
               </IonCardHeader>
               <IonCardContent>
-              Welcome to Permasnap.<br /> This is an early release just for you to test. Permasnap is an application for taking and permanently storing photographs on the Arweave permaweb.
+                Welcome to Permasnap.<br />
+                <p>
+                  This is an early release just for you to test. Permasnap is an application for taking and permanently storing photographs on the Arweave permaweb.
+                </p>
+                <p>
+                  The idea behind this app is to create a smooth onramp for new permaweb users, and promote adoption and use of the permaweb.
+                </p>
               </IonCardContent>
             </IonCard>
           </IonRow>
@@ -33,7 +36,7 @@ const InfoTab: React.FC = () => {
                   After installation a wallet is automatically created for the user and stored in the device's secure key store. The wallet holds no initial balance, and is used for identification at this point in time.
                 </p>
                 <p>
-                  When the user uploads a picture they sign and send it to the Permasnap DPost (Delegated Posting) server. It uses the user's wallet to identify them and cryptographically prove that they sent the photo and associated data, and then actually post it to be mined in the blockweave.
+                  When the user uploads a picture the app signs and sends it to the Permasnap DPost (Delegated Posting) server. The server uses the user's wallet to identify them and cryptographically prove that they sent the photo and associated data, and then it is posted to be mined into the blockweave.
                 </p>
               </IonCardContent>
             </IonCard>
