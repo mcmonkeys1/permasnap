@@ -42,7 +42,7 @@ const App: React.FC = () => {
   const { arWallet } = useWallet()
   const { takePhoto } = useTakePhoto()
   const { isShowing, toggle } = usePhotoUploader()
-  
+
   useEffect(() => {
     Plugins.SplashScreen.hide()
 
@@ -68,10 +68,10 @@ const App: React.FC = () => {
             <Route path="/usertab" component={UserTab} exact={true} />
             <Route path="/infotab" component={InfoTab} exact={true} />
             <Route path="/searchtab/:search?" component={SearchTab} exact={true} />
-            <Route path="/" render={() => <Redirect to="/usertab" />} exact={true} />
+            <Route path="/" render={() => <Redirect to="/infotab" />} exact={true} />
           </IonRouterOutlet>
           <IonFab vertical='bottom' horizontal='start' class='ion-padding-bottom ion-margin-bottom ion-padding-start ion-margin-start'>
-            <IonFabButton color="secondary" routerLink='/infotab' routerDirection='none'>
+            <IonFabButton color="secondary" routerLink='/usertab' routerDirection='none'>
               <img src={require('./assets/img/icon-images.svg')} alt="images" />
             </IonFabButton>
           </IonFab>
