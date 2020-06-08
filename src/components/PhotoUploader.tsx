@@ -23,6 +23,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 	const [description, setDescription] = useState('')
 	const [tags, setTags] = useState<string[]>([])
 	const { arWallet: jwk }  = useWallet()
+	const [uploading, setUploading] = useState(false)
 
 	useEffect(() => {
 		// Quick data length check - this can be removed once arweave 2.1 is released ?
@@ -41,6 +42,8 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 	 * Consider extracting this to separate module. Many TODOs
 	 */
 	const upload = () => {
+		setUploading(true)
+		Toast.show({text: 'Photo uploading...', position: 'center'})
 		currentPhoto.description = description
 		currentPhoto.hashtags = tags
 
@@ -53,7 +56,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 			currentPhoto.description,
 		).then(res => {
 			console.log('DPostResult: ' + JSON.stringify(res))
-			Toast.show({text: 'Photo uploading...', position: 'center'})
+			Toast.show({text: 'Done. Photo will take 5-20 minutes to mine...', position: 'center'})
 
 			dispatch(addTxItem({
 				id: res.id,
@@ -69,7 +72,9 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 			let sErr: string = 'Error in PhotoUploader: '+ JSON.stringify(err)
 			console.log(sErr)
 			Toast.show({text: 'NETWORK ERROR! Please try again', position: 'center'})
-		})
+		}).finally( () =>
+			setUploading(false)
+		)
 	}
 
 	return (
@@ -91,7 +96,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 
 					<div style={captionStyle}>
 						<IonInput style={captionInputStyle} value={description} placeholder="Enter caption..." onIonChange={ev => setDescription(ev.detail.value!)} />
-						<IonButton color="none" onClick={ upload } style={{float: 'right'}} ><IonIcon slot="icon-only" icon={send} /></IonButton>
+						<IonButton disabled={uploading} color="none" onClick={ upload } style={{float: 'right'}} ><IonIcon slot="icon-only" icon={send} /></IonButton>
 					</div>
 				</div>
 
