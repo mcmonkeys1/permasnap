@@ -19,8 +19,8 @@ ReactDOM.render(
 		<PersistGate persistor={persistor} loading={(<h1>Continue showing splashscreen here</h1>)}>
 			<App />
 		</PersistGate>
-	</Provider>, document.getElementById('root')
-
+	</Provider>
+	, document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
