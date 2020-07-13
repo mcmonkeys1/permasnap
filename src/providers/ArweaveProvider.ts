@@ -1,5 +1,6 @@
 import { JWKInterface } from 'arweave/web/lib/wallet'
 import { IPsnapPhoto } from '../redux/reducers'
+import axios from 'axios'
 let Arweave
 if(process.env.NODE_ENV === "test"){ Arweave = require('arweave/node') } 
 else{ Arweave = require('arweave/web').default } //hack for node-based testing to work
@@ -33,6 +34,18 @@ export const isInstanceofJwkInterface = (obj: object):boolean => {
 	// // You could go on: https://tools.ietf.org/html/rfc7518#section-6.3
 
 	return result
+}
+
+export const getTxStatus = async (txid:string) => {
+	return (await arweave.transactions.getStatus(txid)).status
+}
+
+export const getTxTime = async (txid: string) => {
+	let status = await axios(`https://${HOST}/tx/${txid}/status`)
+	let height = status.data.block_height
+	let block = await axios(`https://${HOST}/block/height/${height}`)
+
+	return block.data.timestamp
 }
 
 export const getAllTxsDefault = async ():Promise<IPsnapPhoto[]> => {

@@ -1,6 +1,6 @@
-import { IClientDelegatedTxnDto } from "../types/dpost";
-import axios from 'axios';
-import { JWKInterface } from "arweave/web/lib/wallet";
+import { IClientDelegatedTxnDto } from "../types/dpost"
+import axios from 'axios'
+import { JWKInterface } from "arweave/web/lib/wallet"
 
 const ab2str = require('arraybuffer-to-string')
 let webcrypto = window.crypto.subtle  //this is hard for testing in nodejs env ;-D
@@ -18,7 +18,8 @@ export const DPost = async (
 		locationCity?: string,
 		locationFreetext?: string,
 		locationLat?: string,
-		locationLng?: string ):Promise<IDpostResult> => {
+		locationLng?: string 
+	):Promise<IDpostResult> => {
 
 		
 	/* Construct a transaction */

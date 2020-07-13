@@ -9,7 +9,7 @@ import SearchTab from './pages/SearchTab';
 import { useWallet } from './hooks/useWallet';
 import { useTakePhoto } from './hooks/useTakePhoto';
 import { isInstanceofJwkInterface } from './providers/ArweaveProvider';
-import { usePhotoUploader } from './hooks/usePhotoUploader';
+import { useModalPhotoUploader } from './hooks/useModalPhotoUploader';
 import PhotoUploader from './components/PhotoUploader'
 
 /* Core CSS required for Ionic components to work properly */
@@ -41,7 +41,7 @@ console.log('App-Version: '+process.env.REACT_APP_APP_VERSION)
 const App: React.FC = () => {
   const { arWallet } = useWallet()
   const { takePhoto } = useTakePhoto()
-  const { isShowing, toggle } = usePhotoUploader()
+  const { isShowing, toggle } = useModalPhotoUploader()
 
   useEffect(() => {
     Plugins.SplashScreen.hide()

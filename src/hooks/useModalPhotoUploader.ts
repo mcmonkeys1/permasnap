@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
  * in the parent component. There is some referencing going on under the hood in IonModal.
  */
 
-export const usePhotoUploader = () => {
+export const useModalPhotoUploader = () => {
 	/* Modal related */
 	const [isShowing, setIsShowing] = useState<boolean>(false);
 	
