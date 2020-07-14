@@ -1,4 +1,3 @@
-import { todosReducer } from './todos';
 import { walletReducer } from './wallet';
 import { txListReducer } from './txList';
 import { currentPhotoReducer } from './currentPhoto';
@@ -29,7 +28,6 @@ const walletPersistConfig = {
 
 const rootReducer = combineReducers({
 	wallet: persistReducer(walletPersistConfig, walletReducer),
-	todos: todosReducer,
 	currentPhoto: currentPhotoReducer,
 	txList: txListReducer,
 })
@@ -39,7 +37,6 @@ export const reducers = persistReducer(rootPersistConfig, rootReducer)
 
 
 export * from './reducerTypes'
-export * from './todos'
 export * from './wallet'
 export * from './currentPhoto'
 export * from './txList'
