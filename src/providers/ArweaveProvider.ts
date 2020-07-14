@@ -1,9 +1,13 @@
 import { JWKInterface } from 'arweave/web/lib/wallet'
 import { IPsnapPhoto } from '../redux/reducers'
 import axios from 'axios'
-let Arweave
-if(process.env.NODE_ENV === "test"){ Arweave = require('arweave/node') } 
-else{ Arweave = require('arweave/web').default } //hack for node-based testing to work
+// let Arweave
+// if(process.env.NODE_ENV === "test"){ Arweave = require('arweave/node') } 
+// else{ Arweave = require('arweave/web').default } //hack for node-based testing to work
+// import { TransactionStatusResponse } from 'arweave/node/transactions'
+import Arweave from 'arweave/web'
+import { TransactionStatusResponse } from 'arweave/web/transactions'
+
 
 const HOST = process.env.REACT_APP_ARWEAVE_GW_HOST
 const arweave = Arweave.init({
@@ -36,8 +40,8 @@ export const isInstanceofJwkInterface = (obj: object):boolean => {
 	return result
 }
 
-export const getTxStatus = async (txid:string) => {
-	return (await arweave.transactions.getStatus(txid)).status
+export const getTxStatus = async (txid:string):Promise<TransactionStatusResponse> => {
+	return await arweave.transactions.getStatus(txid) //returns {status,confirmed}
 }
 
 export const getTxTime = async (txid: string) => {
@@ -84,12 +88,6 @@ const getAllTxsByTag = async (name: string, value: string):Promise<IPsnapPhoto[]
 		console.log('Unhandled Rejection (TypeError): res.data.data is null')
 		return []
 	}
-
-	// arweave.transactions.getStatus(txs[0]).then((status:any)=>{
-	// 	console.log('*************************************************************')
-	// 	console.log(status)
-	// 	console.log('*************************************************************')
-	// })
 	
 	//loop over each tx object reformatting the data we need
 	txDatas = txs.map( (tx: IQuery):IPsnapPhoto => {
@@ -140,11 +138,6 @@ export const getArweaveId = async (pubkey: string):Promise<IArIdData> => {
 			id
 		}
 	}`
-	// let gqlQuery = `{
-	// 	transactions(from: "${address}", tags: [{name: "App-Name", value: "arweave-id"},{name: "Type", value: "name"}]){
-	// 		id
-	// 	}
-	// }`
 	//let's just restate that interface in typescript
 	interface IQuery { 
 		id: string; 
@@ -157,7 +150,7 @@ export const getArweaveId = async (pubkey: string):Promise<IArIdData> => {
 	let txids = res.data.data.transactions // returned from newest to oldest
 	if(txids.length > 0){
 
-		let name = await arweave.transactions.getData(txids[0].id, {decode: true, string: true}) //.then(console.log)
+		let name:string = await arweave.transactions.getData(txids[0].id, {decode: true, string: true}) as string
 
 		console.log('arweave-id txid: ')
 		console.log(txids[0].id)
