@@ -7,6 +7,7 @@ import axios from 'axios'
 // import { TransactionStatusResponse } from 'arweave/node/transactions'
 import Arweave from 'arweave/web'
 import { TransactionStatusResponse } from 'arweave/web/transactions'
+import * as ArId from 'arweave-id'
 
 
 const HOST = process.env.REACT_APP_ARWEAVE_GW_HOST
@@ -131,40 +132,18 @@ export interface IArIdData {
 }
 export const getArweaveId = async (pubkey: string):Promise<IArIdData> => {
 	let address: string = await arweave.wallets.ownerToAddress(pubkey) // 
+	let arId: ArId.ArweaveId = await ArId.get(address, arweave)
+	let name = arId.name
 
-	/** We just want the txs with arweaveId "Type": "name" */
-	let gqlQuery = `{
-		transactions(from: "${address}", tags: [{name: "App-Name", value: "arweave-id"},{name: "Type", value: "name"}]){
-			id
-		}
-	}`
-	//let's just restate that interface in typescript
-	interface IQuery { 
-		id: string; 
+	if(name.length === 0){
+		name = address.substr(0,4) + '...' + address.substr( (address.length-4) )
 	}
 
-	//grab the query results
-	let res = await arweave.api.post('arql', { query: gqlQuery })
-
-
-	let txids = res.data.data.transactions // returned from newest to oldest
-	if(txids.length > 0){
-
-		let name:string = await arweave.transactions.getData(txids[0].id, {decode: true, string: true}) as string
-
-		console.log('arweave-id txid: ')
-		console.log(txids[0].id)
-		
-		return { 
-			name,
-			address,
-		}
-	} else{
-		return {
-			name: address.substr(0,4) + '...' + address.substr( (address.length-4) ),
-			address: address,
-		}
+	return {
+		name,
+		address
 	}
+
 }
 
 
