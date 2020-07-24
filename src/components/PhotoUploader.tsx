@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { IonModal, IonButton, IonText, IonInput, IonCard, IonIcon } from '@ionic/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { IStoreState } from '../redux/reducers'
-import { addTxItem } from '../redux/actions';
+import { addTxItem, setCurrentPhoto } from '../redux/actions';
 import * as CSS from 'csstype';
 import { DPost } from '../providers/DPostProvider'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 import { useWallet } from '../hooks/useWallet'
 import { Plugins } from '@capacitor/core';
 import { send } from 'ionicons/icons'
+import { getTxStatus } from '../providers/ArweaveProvider';
 
 
 
@@ -54,18 +55,27 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 			currentPhoto.dataUri!,
 			currentPhoto.hashtags,
 			currentPhoto.description,
-		).then(res => {
+		).then(async res => {
 			console.log('DPostResult: ' + JSON.stringify(res))
 			Toast.show({text: 'Done. Photo will take 5-20 minutes to mine...', position: 'center'})
 
+			let status = await getTxStatus(res.id)
+			// save in upload queue
 			dispatch(addTxItem({
 				id: res.id,
-				status: res.status,
+				status: status.status + '',
 				dataUri: currentPhoto.dataUri,
 				completed: false,
 				hashtags: currentPhoto.hashtags,
 				description: currentPhoto.description
 			}))
+			
+			//clean up memory
+			dispatch(setCurrentPhoto({
+				completed: false,
+				hashtags: [],
+			}))
+
 			hide()
 
 		}).catch((err: any) => {
