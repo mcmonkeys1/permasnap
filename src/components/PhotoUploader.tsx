@@ -56,7 +56,7 @@ const PhotoMetadata = ({isShowing, hide}:IProps) => {
 			currentPhoto.hashtags,
 			currentPhoto.description,
 		).then(async res => {
-			console.log('DPostResult: ' + JSON.stringify(res))
+			console.log('DPost: ' + res.id)
 			Toast.show({text: 'Done. Photo will take 5-20 minutes to mine...', position: 'center'})
 
 			let status = await getTxStatus(res.id)
