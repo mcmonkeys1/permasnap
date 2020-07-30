@@ -1,0 +1,50 @@
+import React from 'react';
+import { render } from '@testing-library/react';
+import App from './App';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store'
+import { IStoreState } from './redux/reducers';
+import { DPost, IDpostResult } from './providers/DPostProvider';
+import { useTakePhoto } from './hooks/useTakePhoto';
+import { JWKInterface } from 'arweave/web/lib/wallet';
+jest.mock('./hooks/useTakePhoto.ts', ()=> {
+  const useTakePhoto = () => 'no picture'
+})
+jest.mock('./providers/DPostProvider.ts',()=> {
+  const DPost = (
+    jwk:JWKInterface,
+		imageDataUri: string,
+		contentTags: string[], 
+		description?: string,
+		locationCountry?: string,
+		locationCity?: string,
+		locationFreetext?: string,
+		locationLat?: string,
+		locationLng?: string 
+  ) =>  {
+    return {status: "OK", id: "txid 123123123123" }
+  }
+})
+
+
+describe('Test App.tsx', () => {
+  const initialState: IStoreState = { 
+    todos: [], 
+    wallet: {}, 
+    currentPhoto: {hashtags:[],completed:false},
+    txList: []
+  }
+  const mockStore = configureStore()
+  let store, wrapper;
+
+  it('renders without crashing', () => {
+    store = mockStore(initialState)
+
+    const { baseElement } = render(<Provider store={store}><App /></Provider>);
+    expect(baseElement).toBeDefined();
+  });
+})
+
+
+
+

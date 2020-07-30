@@ -1,0 +1,7 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+/* hide scrollbars in Chrome, Safari and Opera */
+#screenGrid::-webkit-scrollbar { 
+  display: none;
+}
